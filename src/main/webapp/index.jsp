@@ -9,6 +9,6 @@
 <%@include file="All_Component/Navbar.jsp" %>
 </head>
 <body>
-<h1>Avantika</h1>
+<h1>Yash Khopkar</h1>
 </body>
 </html>
