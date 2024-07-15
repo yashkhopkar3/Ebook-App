@@ -1,3 +1,71 @@
-h1{
-	color:red;
+/* Style.css */
+
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
 }
+
+/* Navbar Styles */
+.navbar {
+    background-color: #555;
+    overflow: auto;
+    width: 100%;
+}
+
+.navbar .navbar-brand {
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar .nav-link {
+    color: #333 !important;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar .nav-item:hover .nav-link {
+    background-color: #0056b3;
+    color: white !important;
+    border-radius: 5px;
+}
+
+.navbar .btn-outline-primary,
+.navbar .btn-outline-success {
+    margin-right: 10px;
+}
+
+.navbar .btn-outline-dark,
+.navbar .btn-primary {
+    margin-left: 10px;
+}
+
+.navbar .navbar-toggler {
+    border: none;
+}
+
+.navbar .navbar-toggler:hover {
+    background-color: #e2e6ea;
+}
+
+.container-fluid h3 {
+    font-family: 'Georgia', serif;
+    color: #007bff;
+}
+
+.container-fluid form .form-control {
+    border-radius: 0.25rem;
+}
+
+.container-fluid form .btn-outline-primary {
+    border-radius: 0.25rem;
+}
+
+.container-fluid .btn-outline-success,
+.container-fluid .btn-outline-primary {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+
