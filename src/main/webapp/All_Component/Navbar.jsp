@@ -28,13 +28,13 @@
                 <a class="nav-link" href="index.jsp"><i class="fa-solid fa-house"></i> Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#recent-books"><i class="fa-solid fa-book-open-reader"></i> Recent</a>
+                <a class="nav-link" href="index.jsp#recent-books"><i class="fa-solid fa-book-open-reader"></i> Recent</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#old-books"><i class="fa-solid fa-book-open"></i> Old Books</a>
+                <a class="nav-link" href="index.jsp#old-books"><i class="fa-solid fa-book-open"></i> Old Books</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#new-books"><i class="fa-solid fa-plane-arrival"></i> New Arrivals</a>
+                <a class="nav-link" href="index.jsp#new-books"><i class="fa-solid fa-plane-arrival"></i> New Arrivals</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="categories.jsp"><i class="fa-solid fa-plane-arrival"></i> Categories</a>

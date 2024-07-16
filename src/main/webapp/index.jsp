@@ -20,7 +20,7 @@
 
 .card-body img {
 	width: 100%;
-	height: auto;
+	height: 250px;
 }
 
 .price {
@@ -118,11 +118,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Energize Your Mind" src="Book/RBook1.png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : Energize Your Mind</p>
+							<p>Author : Gaur Gopal Das</p>
+							<p class="price">Price : Rs 178</p>
 							<div class="row-buttons text-left">
 								<a href="#" class="btn btn-primary btn-custom "> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -138,11 +138,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Build, Dont Talk" src="Book/RBook2.png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : Build, Dont Talk</p>
+							<p>Author : Raj Shamani </p>
+							<p class="price">Price : Rs 230</p>
 							<div class="row-buttons">
 								<a href="#" class="btn btn-primary btn-custom"> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -158,11 +158,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="THE ART OF HAPPINESS" src="Book/RBook3.png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : THE ART OF HAPPINESS </p>
+							<p>Author :  The Dalai Lama</p>
+							<p class="price">Price : Rs 345</p>
 							<div class="row-buttons">
 								<a href="#" class="btn btn-primary btn-custom"> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -178,11 +178,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Here There and Everywhere" src="Book/Sudha Murty.png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : Here There and Everywhere</p>
+							<p>Author : Sudha Murty</p>
+							<p class="price">Price : Rs 450</p>
 							<div class="row-buttons">
 								<a href="#" class="btn btn-primary btn-custom"> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
