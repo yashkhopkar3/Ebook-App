@@ -86,6 +86,66 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 1" src="Book/book1.jpg" class="img-thumbnail">
+                            <p>Book Name: Autobiography 1</p>
+                            <p>Author: Author 1</p>
+                            <p class="price">Price: Rs 500</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 1" src="Book/book1.jpg" class="img-thumbnail">
+                            <p>Book Name: Autobiography 1</p>
+                            <p>Author: Author 1</p>
+                            <p class="price">Price: Rs 500</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 1" src="Book/book1.jpg" class="img-thumbnail">
+                            <p>Book Name: Autobiography 1</p>
+                            <p>Author: Author 1</p>
+                            <p class="price">Price: Rs 500</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Repeat similar blocks for other three books in this category -->
         </div>
     </div>
@@ -94,6 +154,66 @@
     <div class="container-fluid" id="history-books">
         <h3 class="text-center mt-4">History</h3>
         <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 2" src="Book/book2.jpg" class="img-thumbnail">
+                            <p>Book Name: History 1</p>
+                            <p>Author: Author 2</p>
+                            <p class="price">Price: Rs 600</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 2" src="Book/book2.jpg" class="img-thumbnail">
+                            <p>Book Name: History 1</p>
+                            <p>Author: Author 2</p>
+                            <p class="price">Price: Rs 600</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 2" src="Book/book2.jpg" class="img-thumbnail">
+                            <p>Book Name: History 1</p>
+                            <p>Author: Author 2</p>
+                            <p class="price">Price: Rs 600</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card-container">
                     <div class="card fs-1-custom">
@@ -142,7 +262,66 @@
                     </div>
                 </div>
             </div>
-            <!-- Repeat similar blocks for other three books in this category -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 3" src="Book/book3.jpg" class="img-thumbnail">
+                            <p>Book Name: Humor 1</p>
+                            <p>Author: Author 3</p>
+                            <p class="price">Price: Rs 400</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 3" src="Book/book3.jpg" class="img-thumbnail">
+                            <p>Book Name: Humor 1</p>
+                            <p>Author: Author 3</p>
+                            <p class="price">Price: Rs 400</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 3" src="Book/book3.jpg" class="img-thumbnail">
+                            <p>Book Name: Humor 1</p>
+                            <p>Author: Author 3</p>
+                            <p class="price">Price: Rs 400</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -170,7 +349,67 @@
                     </div>
                 </div>
             </div>
-            <!-- Repeat similar blocks for other three books in this category -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 4" src="Book/book4.jpg" class="img-thumbnail">
+                            <p>Book Name: Mystery 1</p>
+                            <p>Author: Author 4</p>
+                            <p class="price">Price: Rs 700</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 4" src="Book/book4.jpg" class="img-thumbnail">
+                            <p>Book Name: Mystery 1</p>
+                            <p>Author: Author 4</p>
+                            <p class="price">Price: Rs 700</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 4" src="Book/book4.jpg" class="img-thumbnail">
+                            <p>Book Name: Mystery 1</p>
+                            <p>Author: Author 4</p>
+                            <p class="price">Price: Rs 700</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
         </div>
     </div>
 
@@ -198,7 +437,67 @@
                     </div>
                 </div>
             </div>
-            <!-- Repeat similar blocks for other three books in this category -->
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 5" src="Book/book5.jpg" class="img-thumbnail">
+                            <p>Book Name: Romantic 1</p>
+                            <p>Author: Author 5</p>
+                            <p class="price">Price: Rs 550</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 5" src="Book/book5.jpg" class="img-thumbnail">
+                            <p>Book Name: Romantic 1</p>
+                            <p>Author: Author 5</p>
+                            <p class="price">Price: Rs 550</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 5" src="Book/book5.jpg" class="img-thumbnail">
+                            <p>Book Name: Romantic 1</p>
+                            <p>Author: Author 5</p>
+                            <p class="price">Price: Rs 550</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 
