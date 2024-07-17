@@ -21,7 +21,7 @@
 
 .card-body img {
     width: 100%;
-    height: auto;
+    height: 250px;
 }
 
 .price {
@@ -70,10 +70,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 1" src="Book/book1.jpg" class="img-thumbnail">
-                            <p>Book Name: Autobiography 1</p>
-                            <p>Author: Author 1</p>
-                            <p class="price">Price: Rs 500</p>
+                            <img alt="Book 1" src="Book/Ratan Tata A Complete Biography 254.png" class="img-thumbnail">
+                            <p>Book Name: Ratan Tata A Complete Biography</p>
+                            <p>Author:AK GANDHI </p>
+                            <p class="price">Price: Rs 399</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -90,10 +90,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 1" src="Book/book1.jpg" class="img-thumbnail">
-                            <p>Book Name: Autobiography 1</p>
-                            <p>Author: Author 1</p>
-                            <p class="price">Price: Rs 500</p>
+                            <img alt="Book 1" src="Book/Sudha Murty.png" class="img-thumbnail">
+                            <p>Book Name: HereThere and Everywhere</p>
+                            <p>Author: Sudha Murty</p>
+                            <p class="price">Price: Rs 450</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -110,10 +110,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 1" src="Book/book1.jpg" class="img-thumbnail">
-                            <p>Book Name: Autobiography 1</p>
-                            <p>Author: Author 1</p>
-                            <p class="price">Price: Rs 500</p>
+                            <img alt="Book 1" src="Book/Sachin Tendulkar.png" class="img-thumbnail">
+                            <p>Book Name: Sachin Tendulkar</p>
+                            <p>Author: Sachin Tendulkar</p>
+                            <p class="price">Price: Rs 299</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -130,10 +130,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 1" src="Book/book1.jpg" class="img-thumbnail">
-                            <p>Book Name: Autobiography 1</p>
-                            <p>Author: Author 1</p>
-                            <p class="price">Price: Rs 500</p>
+                            <img alt="Book 1" src="Book/STEVE JOBS (PB) 299.png" class="img-thumbnail">
+                            <p>Book Name: STEVE JOBS (PB)</p>
+                            <p>Author: Walter Isaacson's</p>
+                            <p class="price">Price: Rs 399</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -158,10 +158,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 2" src="Book/book2.jpg" class="img-thumbnail">
-                            <p>Book Name: History 1</p>
-                            <p>Author: Author 2</p>
-                            <p class="price">Price: Rs 600</p>
+                            <img alt="Book 2" src="Book/Ancient Indian History 499.png" class="img-thumbnail">
+                            <p>Book Name: Ancient Indian History</p>
+                            <p>Author: Dr. Sunil saxena</p>
+                            <p class="price">Price: Rs 499</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -178,10 +178,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 2" src="Book/book2.jpg" class="img-thumbnail">
-                            <p>Book Name: History 1</p>
-                            <p>Author: Author 2</p>
-                            <p class="price">Price: Rs 600</p>
+                            <img alt="Book 2" src="Book/Early Indian History And Beyond 399.png" class="img-thumbnail">
+                            <p>Book Name: Early Indian History And Beyond</p>
+                            <p>Author: Suchandra Ghosh</p>
+                            <p class="price">Price: Rs 399</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -198,10 +198,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 2" src="Book/book2.jpg" class="img-thumbnail">
-                            <p>Book Name: History 1</p>
-                            <p>Author: Author 2</p>
-                            <p class="price">Price: Rs 600</p>
+                            <img alt="Book 2" src="Book/India After Gandhi.png" class="img-thumbnail">
+                            <p>Book Name: India After Gandhi</p>
+                            <p>Author: Ramchandra Guha</p>
+                            <p class="price">Price: Rs 499</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -218,10 +218,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 2" src="Book/book2.jpg" class="img-thumbnail">
-                            <p>Book Name: History 1</p>
-                            <p>Author: Author 2</p>
-                            <p class="price">Price: Rs 600</p>
+                            <img alt="Book 2" src="Book/Perspectives in Indian History 450.png" class="img-thumbnail">
+                            <p>Book Name: Perspectives in Indian History </p>
+                            <p>Author: M. Jankiraman PH.D</p>
+                            <p class="price">Price: Rs 450</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -246,9 +246,9 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 3" src="Book/book3.jpg" class="img-thumbnail">
-                            <p>Book Name: Humor 1</p>
-                            <p>Author: Author 3</p>
+                            <img alt="Book 3" src="Book/A Dailay Dose Of DAD Jokes.png" class="img-thumbnail">
+                            <p>Book Name: A Dailay Dose Of DAD Jokes</p>
+                            <p>Author: Taylor Calmus</p>
                             <p class="price">Price: Rs 400</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
@@ -266,10 +266,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 3" src="Book/book3.jpg" class="img-thumbnail">
-                            <p>Book Name: Humor 1</p>
-                            <p>Author: Author 3</p>
-                            <p class="price">Price: Rs 400</p>
+                            <img alt="Book 3" src="Book/A Puffin Chapter Book 399.png" class="img-thumbnail">
+                            <p>Book Name: A Puffin Chapter Book </p>
+                            <p>Author: Anand Neelakantan</p>
+                            <p class="price">Price: Rs 299</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -286,10 +286,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 3" src="Book/book3.jpg" class="img-thumbnail">
-                            <p>Book Name: Humor 1</p>
-                            <p>Author: Author 3</p>
-                            <p class="price">Price: Rs 400</p>
+                            <img alt="Book 3" src="Book/Jokelopedia 399.png" class="img-thumbnail">
+                            <p>Book Name: Jokelopedia</p>
+                            <p>Author: Mike Wright</p>
+                            <p class="price">Price: Rs 499</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -306,10 +306,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 3" src="Book/book3.jpg" class="img-thumbnail">
-                            <p>Book Name: Humor 1</p>
-                            <p>Author: Author 3</p>
-                            <p class="price">Price: Rs 400</p>
+                            <img alt="Book 3" src="Book/Santa Banta 350.png" class="img-thumbnail">
+                            <p>Book Name: Santa Banta</p>
+                            <p>Author: Santa Banta</p>
+                            <p class="price">Price: Rs 199</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -333,10 +333,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 4" src="Book/book4.jpg" class="img-thumbnail">
-                            <p>Book Name: Mystery 1</p>
-                            <p>Author: Author 4</p>
-                            <p class="price">Price: Rs 700</p>
+                            <img alt="Book 4" src="Book/STORIES CRIME MYSTERY 399.png" class="img-thumbnail">
+                            <p>Book Name: STORIES CRIME MYSTERY</p>
+                            <p>Author: Arvind Updyay</p>
+                            <p class="price">Price: Rs 250</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -353,10 +353,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 4" src="Book/book4.jpg" class="img-thumbnail">
-                            <p>Book Name: Mystery 1</p>
-                            <p>Author: Author 4</p>
-                            <p class="price">Price: Rs 700</p>
+                            <img alt="Book 4" src="Book/The Dare 449.png" class="img-thumbnail">
+                            <p>Book Name: The Dare</p>
+                            <p>Author: Cynthea Liu</p>
+                            <p class="price">Price: Rs 350</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -373,10 +373,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 4" src="Book/book4.jpg" class="img-thumbnail">
-                            <p>Book Name: Mystery 1</p>
-                            <p>Author: Author 4</p>
-                            <p class="price">Price: Rs 700</p>
+                            <img alt="Book 4" src="Book/The Great Indian Mystery 450.png" class="img-thumbnail">
+                            <p>Book Name:The Great Indian Mystery </p>
+                            <p>Author: Dhanesh Kumar M</p>
+                            <p class="price">Price: Rs 499</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -393,10 +393,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 4" src="Book/book4.jpg" class="img-thumbnail">
-                            <p>Book Name: Mystery 1</p>
-                            <p>Author: Author 4</p>
-                            <p class="price">Price: Rs 700</p>
+                            <img alt="Book 4" src="Book/The Mystery of Darkhill School 550.png" class="img-thumbnail">
+                            <p>Book Name: The Mystery of Darkhill School </p>
+                            <p>Author: C J Loughty</p>
+                            <p class="price">Price: Rs 450</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -421,9 +421,49 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 5" src="Book/book5.jpg" class="img-thumbnail">
-                            <p>Book Name: Romantic 1</p>
-                            <p>Author: Author 5</p>
+                            <img alt="Book 5" src="Book/Love Hypothesis 399.png" class="img-thumbnail">
+                            <p>Book Name: Love Hypothesis</p>
+                            <p>Author: Ali Hazelwood</p>
+                            <p class="price">Price: Rs 399</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 5" src="Book/When I am with You.png" class="img-thumbnail">
+                            <p>Book Name: When I am with You</p>
+                            <p>Author: Durjoy Dutta</p>
+                            <p class="price">Price: Rs 299</p>
+                            <div class="row-buttons">
+                                <a href="#" class="btn btn-primary btn-custom">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </a>&nbsp;
+                                <a href="#" class="btn btn-outline-primary btn-custom">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card-container">
+                    <div class="card fs-1-custom">
+                        <div class="card-body text-center">
+                            <img alt="Book 5" src="Book/You are the Best Wife.png" class="img-thumbnail">
+                            <p>Book Name: You are the Best Wife</p>
+                            <p>Author: Ajay k Pandey</p>
                             <p class="price">Price: Rs 550</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
@@ -441,50 +481,10 @@
                 <div class="card-container">
                     <div class="card fs-1-custom">
                         <div class="card-body text-center">
-                            <img alt="Book 5" src="Book/book5.jpg" class="img-thumbnail">
-                            <p>Book Name: Romantic 1</p>
-                            <p>Author: Author 5</p>
-                            <p class="price">Price: Rs 550</p>
-                            <div class="row-buttons">
-                                <a href="#" class="btn btn-primary btn-custom">
-                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                                </a>&nbsp;
-                                <a href="#" class="btn btn-outline-primary btn-custom">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card-container">
-                    <div class="card fs-1-custom">
-                        <div class="card-body text-center">
-                            <img alt="Book 5" src="Book/book5.jpg" class="img-thumbnail">
-                            <p>Book Name: Romantic 1</p>
-                            <p>Author: Author 5</p>
-                            <p class="price">Price: Rs 550</p>
-                            <div class="row-buttons">
-                                <a href="#" class="btn btn-primary btn-custom">
-                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                                </a>&nbsp;
-                                <a href="#" class="btn btn-outline-primary btn-custom">
-                                    View Details
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card-container">
-                    <div class="card fs-1-custom">
-                        <div class="card-body text-center">
-                            <img alt="Book 5" src="Book/book5.jpg" class="img-thumbnail">
-                            <p>Book Name: Romantic 1</p>
-                            <p>Author: Author 5</p>
-                            <p class="price">Price: Rs 550</p>
+                            <img alt="Book 5" src="Book/Until Love set us apart.png" class="img-thumbnail">
+                            <p>Book Name: Until Love set us apart</p>
+                            <p>Author: Aditya Nighhot</p>
+                            <p class="price">Price: Rs 699</p>
                             <div class="row-buttons">
                                 <a href="#" class="btn btn-primary btn-custom">
                                     <i class="fa-solid fa-cart-shopping"></i> Add to Cart
