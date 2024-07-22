@@ -1,5 +1,3 @@
-<%@page import="com.DB.DBConnect"%>
-<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -86,6 +84,7 @@
 				class="active"></li>
 			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
 			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+			<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
 		</ol>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
@@ -100,6 +99,11 @@
 				<img class="d-block w-100" src="Book/Bookbg3.png" alt="Third slide">
 				<div class="carousel-caption d-none d-md-block"></div>
 			</div>
+			<div class="carousel-item">
+			     <!-- add link to offer section -->
+				<a href="offer.jsp"><img class="d-block w-100" src="Book/Slider4.png" alt="Fourth slide"></a>
+				<div class="carousel-caption d-none d-md-block"></div>
+			</div>
 		</div>
 		<a class="carousel-control-prev" href="#carouselExampleIndicators"
 			role="button" data-slide="prev"> <span
@@ -111,7 +115,6 @@
 			class="sr-only">Next</span>
 		</a>
 	</div>
-	
 	<!--Start of Recent-->
 	<div class="container-fluid" id="recent-books">
 	<br>
@@ -210,11 +213,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Java Programming" src="Book/DEATH AN INSIDE STORY .png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : DEATH AN INSIDE STORY </p>
+							<p>Author : Sadhguru</p>
+							<p class="price">Price : Rs 299</p>
 							<div class="row-buttons">
 								<a href="#" class="btn btn-primary btn-custom"> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -230,11 +233,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Java Programming" src="Book/The Dhoni Touch .png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : The Dhoni Touch </p>
+							<p>Author : Bharat Sundaresen</p>
+							<p class="price">Price : Rs 399</p>
 							<div class="row-buttons">
 								<a href="#" class="btn btn-primary btn-custom"> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -250,11 +253,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Java Programming" src="Book/Unfinished_A Memoir .png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : Unfinished_A Memoir </p>
+							<p>Author : Priyanka Chopra Jonas</p>
+							<p class="price">Price : Rs 499</p>
 							<div class="row-buttons">
 								<a href="#" class="btn btn-primary btn-custom"> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -270,11 +273,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Java Programming" src="Book/The Story of Tata.png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : The Story of Tata</p>
+							<p>Author : Peter Casey</p>
+							<p class="price">Price : Rs 299</p>
 							<div class="row-buttons">
 								<a href="#" class="btn btn-primary btn-custom"> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -299,11 +302,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Java Programming" src="Book/The Ikigai Journey .png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : The Ikigai Journey </p>
+							<p>Author : Hector Gracia</p>
+							<p class="price">Price : Rs 199</p>
 							<a href="#"
 								class="btn btn-outline-primary btn-custom text-center"> View
 								Details </a>
@@ -316,11 +319,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Java Programming" src="Book/Sherlock Holmes 199.png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : Sherlock Holmes</p>
+							<p>Author : SIR ARTHUR CONAN DOYLE</p>
+							<p class="price">Price : Rs 199</p>
 							<a href="#"
 								class="btn btn-outline-primary btn-custom text-center"> View
 								Details </a>
@@ -333,11 +336,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Java Programming" src="Book/KALAM.png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : KALAM</p>
+							<p>Author : A. K. Gnadhi</p>
+							<p class="price">Price : Rs 299</p>
 							<a href="#"
 								class="btn btn-outline-primary btn-custom text-center"> View
 								Details </a>
@@ -350,11 +353,11 @@
 				<div class="card-container">
 					<div class="card fs-1-custom">
 						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/java.jpg"
+							<img alt="Java Programming" src="Book/LONG WALK TO FREEDOM.png"
 								class="img-thumbnail">
-							<p>Book Name : Java Programming</p>
-							<p>Author : Balagurusamy</p>
-							<p class="price">Price : Rs 735</p>
+							<p>Book Name : LONG WALK TO FREEDOM</p>
+							<p>Author : Nelson Mandela</p>
+							<p class="price">Price : Rs 299</p>
 							<a href="#"
 								class="btn btn-outline-primary btn-custom text-center"> View
 								Details </a>
