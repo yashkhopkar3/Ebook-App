@@ -1,3 +1,5 @@
+<%@page import="com.DB.DBConnect"%>
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -109,6 +111,7 @@
 			class="sr-only">Next</span>
 		</a>
 	</div>
+	
 	<!--Start of Recent-->
 	<div class="container-fluid" id="recent-books">
 	<br>

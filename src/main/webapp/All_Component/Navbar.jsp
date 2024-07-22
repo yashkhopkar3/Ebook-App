@@ -37,7 +37,7 @@
                 <a class="nav-link" href="index.jsp#new-books"><i class="fa-solid fa-plane-arrival"></i> New Arrivals</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="categories.jsp"><i class="fa-solid fa-plane-arrival"></i> Categories</a>
+                <a class="nav-link" href="categories.jsp"><i class="fa-solid fa-list"></i> Categories</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa-solid fa-envelope"></i> Offers</a>
