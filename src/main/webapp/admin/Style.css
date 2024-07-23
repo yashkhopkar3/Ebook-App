@@ -1,0 +1,140 @@
+/* Global Styles */
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #555;
+    overflow: auto;
+    width: 100%;
+}
+
+.navbar .navbar-brand {
+    font-weight: bold;
+    color: #333;
+}
+
+.dropdown-menu {
+        top: 100%;
+        left: 0;
+        margin-top: 0.125rem;
+        padding: 0.5rem 0;
+    }
+
+    .dropdown-item {
+        padding: 0.25rem 1.5rem;
+    }
+
+.navbar .nav-link {
+    color: #333 !important;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar .nav-item:hover .nav-link {
+    background-color: #0056b3;
+    color: white !important;
+    border-radius: 5px;
+}
+
+.navbar .btn-outline-primary,
+.navbar .btn-outline-success {
+    margin-right: 10px;
+}
+
+.navbar .btn-outline-dark,
+.navbar .btn-primary {
+    margin-left: 10px;
+}
+
+.navbar .navbar-toggler {
+    border: none;
+}
+
+.navbar .navbar-toggler:hover {
+    background-color: #e2e6ea;
+}
+
+.container-fluid h3 {
+    font-family: 'Georgia', serif;
+    color: #007bff;
+}
+
+.container-fluid form .form-control {
+    border-radius: 0.25rem;
+}
+
+.container-fluid form .btn-outline-primary {
+    border-radius: 0.25rem;
+}
+
+.container-fluid .btn-outline-success,
+.container-fluid .btn-outline-primary {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+.fs-1-custom {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-body img {
+    width: 100%;
+    height: auto;
+}
+
+.price {
+    font-size: 1.1rem;
+    color: #28a745;
+}
+
+.btn-custom {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+.btn-custom .fa {
+    margin-right: 0.5rem;
+}
+
+.row-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+@media (max-width: 576px) {
+    .row-buttons {
+        flex-direction: column;
+    }
+    
+    .row-buttons a {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.carousel-inner img {
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+}
+
+.carousel-caption h2 {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.card-container {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+    padding: 15px;
+}
