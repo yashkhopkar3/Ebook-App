@@ -5,7 +5,7 @@ public class BookDtls {
 	private int bookId;
 	private String bookName;
 	private String author;
-	private Double price;
+	private String price;
 	private String bookCategory;
 	private String status;
 	private String photoName;
@@ -50,12 +50,12 @@ public class BookDtls {
 	}
 
 
-	public Double getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
 
-	public void setPrice(Double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 
@@ -100,7 +100,7 @@ public class BookDtls {
 	}
 
 
-	public BookDtls(String bookName, String author, Double price, String bookCategory, String status, String photoName,
+	public BookDtls(String bookName, String author, String price, String bookCategory, String status, String photoName,
 			String email) {
 		super();
 		this.bookName = bookName;

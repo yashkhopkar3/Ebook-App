@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,9 +53,17 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="text-center mb-4">Add Book</h3>
-                    
-                    <form action="addBook" method="post" enctype="multipart/form-data">
-                        <!-- Book Name -->
+                    <c:if test="${not empty SuccMsg}">
+                            <p class="text-center text-success">${SuccMsg}</p>
+                            <c:remove var="SuccMsg" scope="session"/>
+                        </c:if>
+
+                        <c:if test="${not empty FailMsg}">
+                            <p class="text-center text-danger">${FailMsg}</p>
+                            <c:remove var="FailMsg" scope="session"/>
+                        </c:if>
+                    <form action="../add_books" method="post" enctype="multipart/form-data">
+
                         <div class="mb-3">
                             <label for="bookName" class="form-label">Book Name</label>
                             <input type="text" class="form-control" id="bookName" name="bookName" required>
@@ -68,7 +78,7 @@
                         <!-- Price -->
                         <div class="mb-3">
                             <label for="price" class="form-label">Price</label>
-                            <input type="number" class="form-control" id="price" name="price" required>
+                            <input type="number" step="0.01" class="form-control" id="price" name="price" required>
                         </div>
                         
                         <!-- Book Categories -->

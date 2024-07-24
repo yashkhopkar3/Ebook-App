@@ -1,3 +1,7 @@
+<%@page import="com.entity.BookDtls"%>
+<%@page import="java.util.List"%>
+<%@page import="com.DB.DBConnect"%>
+<%@page import="com.DAO.BookDAOImpl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -15,7 +19,8 @@
     <table class="table table-striped table-hover">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Id</th>
+            	<th scope="col">Id</th>
+                <th scope="col">Image</th>
                 <th scope="col">Book Name</th>
                 <th scope="col">Author Name</th>
                 <th scope="col">Price</th>
@@ -25,68 +30,26 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Sample row data -->
-            <tr>
-                <td>19</td>
-                <td>
-                    <img src="path/to/c_programming.jpg" alt="C Programming" style="width: 50px; height: 50px;"/>
-                    C Programming
-                </td>
-                <td>Balaguruswamy</td>
-                <td>250</td>
-                <td>New</td>
-                <td>Active</td>
-                <td>
-                    <button class="btn btn-primary btn-sm">Edit</button>
-                    <button class="btn btn-danger btn-sm">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>20</td>
-                <td>
-                    <img src="path/to/c_ansi_programming.jpg" alt="C Ansi Programming" style="width: 50px; height: 50px;"/>
-                    C Ansi Programming
-                </td>
-                <td>Balaguruswamy</td>
-                <td>550</td>
-                <td>New</td>
-                <td>Active</td>
-                <td>
-                    <button class="btn btn-primary btn-sm">Edit</button>
-                    <button class="btn btn-danger btn-sm">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>21</td>
-                <td>
-                    <img src="path/to/linux_with_command.jpg" alt="Linux With Command" style="width: 50px; height: 50px;"/>
-                    Linux With Command
-                </td>
-                <td>Jageswar</td>
-                <td>799</td>
-                <td>New</td>
-                <td>Active</td>
-                <td>
-                    <button class="btn btn-primary btn-sm">Edit</button>
-                    <button class="btn btn-danger btn-sm">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>22</td>
-                <td>
-                    <img src="path/to/the_art_of_letting_go.jpg" alt="The Art of Letting Go" style="width: 50px; height: 50px;"/>
-                    The Art of Letting Go
-                </td>
-                <td>Amit</td>
-                <td>190</td>
-                <td>New</td>
-                <td>Active</td>
-                <td>
-                    <button class="btn btn-primary btn-sm">Edit</button>
-                    <button class="btn btn-danger btn-sm">Delete</button>
-                </td>
-            </tr>
-            <!-- Repeat rows as needed -->
+            <% 
+        BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
+        List<BookDtls> list = dao.getALLBooks();
+        for (BookDtls b : list) {
+        %>
+        <tr>
+        	<td><%= b.getBookId() %></td>
+			<td><img src="../Book/<%= b.getPhotoName() %>" style="width: 50px; height: 50px;"></td>
+			<td><%= b.getBookName() %></td>
+			<td><%= b.getAuthor() %></td>
+			<td><%= b.getPrice() %></td>
+			<td><%= b.getBookCategory() %></td>
+			<td><%= b.getStatus() %></td>
+			<td><a href="#" class="btn btn-sm btn-primary">Edit</a> 
+			<a href="#" class="btn btn-sm btn-danger">Delete</a></td>
+			        	
+        </tr>
+        <%
+        }
+        %>
         </tbody>
     </table>
 </div>
