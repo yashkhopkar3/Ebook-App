@@ -1,11 +1,13 @@
+<%@page import="com.entity.BookDtls"%>
+<%@page import="com.DB.DBConnect"%>
+<%@page import="com.DAO.BookDAOImpl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page isELIgnored="false" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Admin : Add Books</title>
+<title>Admin : Edit Books</title>
 <%@ include file="AllCSS.jsp" %>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -46,53 +48,50 @@
 </head>
 <body style="background-color: #f0f1f2;">
 <%@ include file="Navbar.jsp" %>
-<c:if test="${empty userobj}">
-	<c:redirect url="../login.jsp" />
-	</c:if>
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="text-center mb-4">Add Book</h3>
-                    <c:if test="${not empty SuccMsg}">
-                            <p class="text-center text-success">${SuccMsg}</p>
-                            <c:remove var="SuccMsg" scope="session"/>
-                        </c:if>
-
-                        <c:if test="${not empty FailMsg}">
-                            <p class="text-center text-danger">${FailMsg}</p>
-                            <c:remove var="FailMsg" scope="session"/>
-                        </c:if>
-                    <form action="../add_books" method="post" enctype="multipart/form-data">
-
+                    <h3 class="text-center mb-4">Edit Book</h3>
+                    
+                    
+                    <%
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    BookDAOImpl doa = new BookDAOImpl(DBConnect.getConn());
+                    BookDtls b = doa.getBookbyId(id);
+                    %>
+                    
+                    <form action="../edit_books" method="post">
+						<input type="hidden" name="id" value="<%=b.getBookId()%>">
                         <div class="mb-3">
                             <label for="bookName" class="form-label">Book Name</label>
-                            <input type="text" class="form-control" id="bookName" name="bookName" required>
+                            <input type="text" class="form-control" id="bookName" name="bookName" value="<%=b.getBookName()%>" required>
                         </div>
                         
                         <!-- Author Name -->
                         <div class="mb-3">
                             <label for="authorName" class="form-label">Author Name</label>
-                            <input type="text" class="form-control" id="authorName" name="authorName" required>
+                            <input type="text" class="form-control" id="authorName" name="authorName" value="<%=b.getAuthor()%>" required>
                         </div>
                         
                         <!-- Price -->
                         <div class="mb-3">
                             <label for="price" class="form-label">Price</label>
-                            <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+                            <input type="number" step="0.01" class="form-control" id="price" name="price" value="<%=b.getPrice()%>" required>
                         </div>
                         
                         <!-- Book Categories -->
                         <div class="mb-3">
                             <label for="bookCategories" class="form-label">Book Categories</label>
                             <select class="form-control" id="bookCategories" name="bookCategories" required>
-                                <option value="" disabled selected>--select--</option>
-                                <option value="Autobiography">Autobiography</option>
-                                <option value="History">History</option>
-                                <option value="Humor">Humor</option>
-                                <option value="Mystery">Mystery</option>
-                                <option value="Romantic">Romantic</option>
+                                <option value="" disabled>Select Category</option>
+                                <option value="Autobiography" <%= "Autobiography".equals(b.getBookCategory()) ? "selected" : "" %>>Autobiography</option>
+                                <option value="History" <%= "History".equals(b.getBookCategory()) ? "selected" : "" %>>History</option>
+                                <option value="Humor" <%= "Humor".equals(b.getBookCategory()) ? "selected" : "" %>>Humor</option>
+                                <option value="Mystery" <%= "Mystery".equals(b.getBookCategory()) ? "selected" : "" %>>Mystery</option>
+                                <option value="Romantic" <%= "Romantic".equals(b.getBookCategory()) ? "selected" : "" %>>Romantic</option>
                             </select>
                         </div>
                         
@@ -100,21 +99,15 @@
                         <div class="mb-3">
                             <label for="bookStatus" class="form-label">Book Status</label>
                             <select class="form-control" id="bookStatus" name="bookStatus" required>
-                                <option value="" disabled selected>--select--</option>
-                                <option value="Available">Available</option>
-                                <option value="Unavailable">Unavailable</option>
+                                <option value="" disabled>Select Status</option>
+                                <option value="Available" <%= "Available".equals(b.getStatus()) ? "selected" : "" %>>Available</option>
+                                <option value="Unavailable" <%= "Unavailable".equals(b.getStatus()) ? "selected" : "" %>>Unavailable</option>
                             </select>
-                        </div>
-                        
-                        <!-- Upload Photo -->
-                        <div class="mb-3">
-                            <label for="uploadPhoto" class="form-label">Upload Photo</label>
-                            <input type="file" class="form-control" id="uploadPhoto" name="uploadPhoto" required>
                         </div>
                         
                         <!-- Submit Button -->
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
                 </div>

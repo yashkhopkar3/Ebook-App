@@ -53,7 +53,10 @@
 				<div class="card">
 					<div class="card-body">
 						<h3 class="text-center mb-4">Login</h3>
-						
+						 <c:if test="${not empty SuccMsg}">
+                            <p class="text-center text-success">${SuccMsg}</p>
+                            <c:remove var="SuccMsg" scope="session"/>
+                        </c:if>
 						<c:if test="${not empty failedMsg}">
 							<h5 class="text-center text-danger">${failedMsg}</h5>
 							<c:remove var="failedMsg" scope="session" />

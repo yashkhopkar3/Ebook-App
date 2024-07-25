@@ -29,9 +29,9 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
             
-            // Check if the user is admin
             if ("admin@gmail.com".equals(email) && "admin".equals(password)) {
-                User us = new User(); // Create a new User object for admin
+                User us = new User(); 
+                us.setName("Admin");
                 session.setAttribute("userobj", us);
                 resp.sendRedirect("admin/home.jsp");
             } else {
