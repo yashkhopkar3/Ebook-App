@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%@page import="com.entity.BookDtls"%>
+<%@page import="com.DB.DBConnect"%>
+<%@page import="com.DAO.BookDAOImpl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -205,169 +209,71 @@
 	<!--End of Recent-->
 
 	<!--Start of New Books-->
-	<div class="container-fluid " id="new-books">
-	<br>
-		<h3 class="text-center mt-4">New Books</h3>
-		<div class="row">
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/DEATH AN INSIDE STORY .png"
-								class="img-thumbnail">
-							<p>Book Name : DEATH AN INSIDE STORY </p>
-							<p>Author : Sadhguru</p>
-							<p class="price">Price : Rs 299</p>
-							<div class="row-buttons">
-								<a href="#" class="btn btn-primary btn-custom"> <i
-									class="fa-solid fa-cart-shopping"></i> Add to Cart
-								</a>&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">
-									View Details </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/The Dhoni Touch .png"
-								class="img-thumbnail">
-							<p>Book Name : The Dhoni Touch </p>
-							<p>Author : Bharat Sundaresen</p>
-							<p class="price">Price : Rs 399</p>
-							<div class="row-buttons">
-								<a href="#" class="btn btn-primary btn-custom"> <i
-									class="fa-solid fa-cart-shopping"></i> Add to Cart
-								</a>&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">
-									View Details </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/Unfinished_A Memoir .png"
-								class="img-thumbnail">
-							<p>Book Name : Unfinished_A Memoir </p>
-							<p>Author : Priyanka Chopra Jonas</p>
-							<p class="price">Price : Rs 499</p>
-							<div class="row-buttons">
-								<a href="#" class="btn btn-primary btn-custom"> <i
-									class="fa-solid fa-cart-shopping"></i> Add to Cart
-								</a>&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">
-									View Details </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/The Story of Tata.png"
-								class="img-thumbnail">
-							<p>Book Name : The Story of Tata</p>
-							<p>Author : Peter Casey</p>
-							<p class="price">Price : Rs 299</p>
-							<div class="row-buttons">
-								<a href="#" class="btn btn-primary btn-custom"> <i
-									class="fa-solid fa-cart-shopping"></i> Add to Cart
-								</a>&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">
-									View Details </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
+	<div class="container-fluid" id="new-books">
+    <br>
+    <h3 class="text-center mt-4">New Books</h3>
+    <div class="row">
+        <%
+        BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
+        List<BookDtls> list = dao.getNewBook();
+        for (BookDtls b : list) {
+        %>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card-container">
+                <div class="card fs-1-custom">
+                    <div class="card-body text-center">
+                        <img alt="<%= b.getBookName() %>" src="Book/<%= b.getPhotoName() %>" class="img-thumbnail">
+                        <p>Book Name: <%= b.getBookName() %></p>
+                        <p>Author: <%= b.getAuthor() %></p>
+                        <p class="price">Price: <i class="fa-solid fa-indian-rupee-sign"></i> <%= b.getPrice() %></p>
+                        <div class="row-buttons">
+                            <a href="#" class="btn btn-primary btn-custom">
+                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                            </a>
+                            &nbsp;
+                            <a href="#" class="btn btn-outline-primary btn-custom">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%
+        }
+        %>
+    </div>
+</div>
+	
 	<!--End of New Books-->
 
 	<!--Start of Old Books-->
-	<div class="container-fluid " id="old-books">
-	<br>
-		<h3 class="text-center mt-4">Old Books</h3>
-		<div class="row">
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/The Ikigai Journey .png"
-								class="img-thumbnail">
-							<p>Book Name : The Ikigai Journey </p>
-							<p>Author : Hector Gracia</p>
-							<p class="price">Price : Rs 199</p>
-							<a href="#"
-								class="btn btn-outline-primary btn-custom text-center"> View
-								Details </a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/Sherlock Holmes 199.png"
-								class="img-thumbnail">
-							<p>Book Name : Sherlock Holmes</p>
-							<p>Author : SIR ARTHUR CONAN DOYLE</p>
-							<p class="price">Price : Rs 199</p>
-							<a href="#"
-								class="btn btn-outline-primary btn-custom text-center"> View
-								Details </a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/KALAM.png"
-								class="img-thumbnail">
-							<p>Book Name : KALAM</p>
-							<p>Author : A. K. Gnadhi</p>
-							<p class="price">Price : Rs 299</p>
-							<a href="#"
-								class="btn btn-outline-primary btn-custom text-center"> View
-								Details </a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Java Programming" src="Book/LONG WALK TO FREEDOM.png"
-								class="img-thumbnail">
-							<p>Book Name : LONG WALK TO FREEDOM</p>
-							<p>Author : Nelson Mandela</p>
-							<p class="price">Price : Rs 299</p>
-							<a href="#"
-								class="btn btn-outline-primary btn-custom text-center"> View
-								Details </a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
+<div class="container-fluid" id="old-books">
+    <br>
+    <h3 class="text-center mt-4">Old Books</h3>
+    <div class="row">
+        <%
+        // Fetch old books from database
+        BookDAOImpl dao1 = new BookDAOImpl(DBConnect.getConn());
+        List<BookDtls> oldBooks = dao1.getOldBooks();
+        for (BookDtls b : oldBooks) {
+        %>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card-container">
+                <div class="card fs-1-custom">
+                    <div class="card-body text-center">
+                        <img alt="<%= b.getBookName() %>" src="Book/<%= b.getPhotoName() %>" class="img-thumbnail">
+                        <p>Book Name: <%= b.getBookName() %></p>
+                        <p>Author: <%= b.getAuthor() %></p>
+                        <p class="price">Price: <i class="fa-solid fa-indian-rupee-sign"></i> <%= b.getPrice() %></p>
+                        <a href="#" class="btn btn-outline-primary btn-custom text-center">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%
+        }
+        %>
+    </div>
+</div>
 	<!--End of Old Books-->
 
 	<%@include file="All_Component/footer.jsp"%>

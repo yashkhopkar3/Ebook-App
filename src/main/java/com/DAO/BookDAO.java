@@ -10,4 +10,6 @@ public interface BookDAO {
     public BookDtls getBookbyId(int id);
     public boolean UpdateEditBooks(BookDtls b);
     public boolean DeleteBooks(int id);
+    public List<BookDtls> getNewBook(); 
+    public List<BookDtls> getOldBooks();
 }

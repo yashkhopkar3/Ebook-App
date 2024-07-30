@@ -139,7 +139,79 @@ public class BookDAOImpl implements BookDAO {
 
         return result;
     }
-
     
+    public List<BookDtls> getNewBook() {
+        List<BookDtls> list = new ArrayList<BookDtls>();
+        BookDtls b = null;
+        try {
+            String sql = "WITH ranked_books AS (" +
+                         "    SELECT bookId, bookname, author, price, bookCategory, status, photo, email, " +
+                         "           ROW_NUMBER() OVER (PARTITION BY bookCategory ORDER BY bookId DESC) as rn " +
+                         "    FROM book_dtls " +
+                         "    WHERE status = ?" +
+                         ") " +
+                         "SELECT bookId, bookname, author, price, bookCategory, status, photo, email " +
+                         "FROM ranked_books " +
+                         "WHERE rn = 1 " +
+                         "ORDER BY RAND() " +
+                         "LIMIT 4";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "Available");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                b = new BookDtls();
+                b.setBookId(rs.getInt("bookId"));
+                b.setBookName(rs.getString("bookname"));
+                b.setAuthor(rs.getString("author"));
+                b.setPrice(rs.getString("price"));
+                b.setBookCategory(rs.getString("bookCategory"));
+                b.setStatus(rs.getString("status"));
+                b.setPhotoName(rs.getString("photo"));
+                b.setEmail(rs.getString("email"));
+                list.add(b);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public List<BookDtls> getOldBooks() {
+        List<BookDtls> list = new ArrayList<>();
+        BookDtls b = null;
+        try {
+            // SQL query to fetch the oldest books in each category
+            String sql = "WITH ranked_books AS (" +
+                         "    SELECT bookId, bookname, author, price, bookCategory, status, photo, email, " +
+                         "           ROW_NUMBER() OVER (PARTITION BY bookCategory ORDER BY bookId ASC) as rn " +
+                         "    FROM book_dtls " +
+                         "    WHERE status = ?" +
+                         ") " +
+                         "SELECT bookId, bookname, author, price, bookCategory, status, photo, email " +
+                         "FROM ranked_books " +
+                         "WHERE rn = 1 " +
+                         "ORDER BY RAND() " +
+                         "LIMIT 4";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "Unavailable");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                b = new BookDtls();
+                b.setBookId(rs.getInt("bookId"));
+                b.setBookName(rs.getString("bookname"));
+                b.setAuthor(rs.getString("author"));
+                b.setPrice(rs.getString("price"));
+                b.setBookCategory(rs.getString("bookCategory"));
+                b.setStatus(rs.getString("status"));
+                b.setPhotoName(rs.getString("photo"));
+                b.setEmail(rs.getString("email"));
+                list.add(b);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     
 }
