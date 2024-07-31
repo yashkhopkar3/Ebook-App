@@ -1,3 +1,4 @@
+<%@page import="com.entity.User"%>
 <%@page import="java.util.List"%>
 <%@page import="com.entity.BookDtls"%>
 <%@page import="com.DB.DBConnect"%>
@@ -78,6 +79,10 @@
 </style>
 </head>
 <body>
+
+	<%
+	User u =(User)session.getAttribute("userobj");
+	%>
 	<%@include file="All_Component/Navbar.jsp"%>
 
 	<!-- Carousel Slider -->
