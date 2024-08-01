@@ -3,8 +3,10 @@
 <%@page import="com.entity.BookDtls"%>
 <%@page import="com.DB.DBConnect"%>
 <%@page import="com.DAO.BookDAOImpl"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,209 +78,295 @@
 	margin: 0 auto;
 	padding: 15px;
 }
+
+/* Toast Container */
+#toast {
+    min-width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #333;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    z-index: 9999;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+/* Display Toast */
+#toast.display {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+}
+
+/* Toast Display and Hide */
+#toast.display {
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+}
+
+
+
 </style>
 </head>
 <body>
 
-	<%
-	User u =(User)session.getAttribute("userobj");
-	%>
-	<%@include file="All_Component/Navbar.jsp"%>
+<c:if test="${not empty addCart}">
+    <div id="toast">${addCart}</div>
 
-	<!-- Carousel Slider -->
-	<div id="carouselExampleIndicators" class="carousel slide"
-		data-ride="carousel" data-interval="5000">
-		<ol class="carousel-indicators">
-			<li data-target="#carouselExampleIndicators" data-slide-to="0"
-				class="active"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-		</ol>
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img class="d-block w-100" src="Book/Bookbg1.jpg" alt="First slide">
-				<div class="carousel-caption d-none d-md-block"></div>
-			</div>
-			<div class="carousel-item">
-				<img class="d-block w-100" src="Book/Bookbg2.png" alt="Second slide">
-				<div class="carousel-caption d-none d-md-block"></div>
-			</div>
-			<div class="carousel-item">
-				<img class="d-block w-100" src="Book/Bookbg3.png" alt="Third slide">
-				<div class="carousel-caption d-none d-md-block"></div>
-			</div>
-			<div class="carousel-item">
-			     <!-- add link to offer section -->
-				<a href="offer.jsp"><img class="d-block w-100" src="Book/Slider4.png" alt="Fourth slide"></a>
-				<div class="carousel-caption d-none d-md-block"></div>
-			</div>
-		</div>
-		<a class="carousel-control-prev" href="#carouselExampleIndicators"
-			role="button" data-slide="prev"> <span
-			class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-			class="sr-only">Previous</span>
-		</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
-			role="button" data-slide="next"> <span
-			class="carousel-control-next-icon" aria-hidden="true"></span> <span
-			class="sr-only">Next</span>
-		</a>
-	</div>
-	<!--Start of Recent-->
-	<div class="container-fluid" id="recent-books">
-	<br>
-		<h3 class="text-center mt-4">Recent Books</h3>
-		<div class="row">
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Energize Your Mind" src="Book/RBook1.png"
-								class="img-thumbnail">
-							<p>Book Name : Energize Your Mind</p>
-							<p>Author : Gaur Gopal Das</p>
-							<p class="price">Price : Rs 178</p>
-							<div class="row-buttons text-left">
-								<a href="#" class="btn btn-primary btn-custom "> <i
-									class="fa-solid fa-cart-shopping"></i> Add to Cart
-								</a>&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">
-									View Details </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+<script type="text/javascript">
+		showToast();
+		function showToast(content)
+		{
+		    $('#toast').addClass("display");
+		    $('#toast').html(content);
+		    setTimeout(()=>{
+		        $("#toast").removeClass("display");
+		    },2000)
+		}	
+</script>
+</c:if>
+<%
+User u = (User) session.getAttribute("userobj");
+%>
+<%@include file="All_Component/Navbar.jsp"%>
 
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Build, Dont Talk" src="Book/RBook2.png"
-								class="img-thumbnail">
-							<p>Book Name : Build, Dont Talk</p>
-							<p>Author : Raj Shamani </p>
-							<p class="price">Price : Rs 230</p>
-							<div class="row-buttons">
-								<a href="#" class="btn btn-primary btn-custom"> <i
-									class="fa-solid fa-cart-shopping"></i> Add to Cart
-								</a>&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">
-									View Details </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="THE ART OF HAPPINESS" src="Book/RBook3.png"
-								class="img-thumbnail">
-							<p>Book Name : THE ART OF HAPPINESS </p>
-							<p>Author :  The Dalai Lama</p>
-							<p class="price">Price : Rs 345</p>
-							<div class="row-buttons">
-								<a href="#" class="btn btn-primary btn-custom"> <i
-									class="fa-solid fa-cart-shopping"></i> Add to Cart
-								</a>&nbsp;&nbsp; <a href="#"
-									class="btn btn-outline-primary btn-custom"> View Details </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="Here There and Everywhere" src="Book/Sudha Murty.png"
-								class="img-thumbnail">
-							<p>Book Name : Here There and Everywhere</p>
-							<p>Author : Sudha Murty</p>
-							<p class="price">Price : Rs 450</p>
-							<div class="row-buttons">
-								<a href="#" class="btn btn-primary btn-custom"> <i
-									class="fa-solid fa-cart-shopping"></i> Add to Cart
-								</a>&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">
-									View Details </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--End of Recent-->
-
-	<!--Start of New Books-->
-	<div class="container-fluid" id="new-books">
+<!-- Carousel Slider -->
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="5000">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="Book/Bookbg1.jpg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block"></div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="Book/Bookbg2.png" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block"></div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="Book/Bookbg3.png" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block"></div>
+        </div>
+        <div class="carousel-item">
+            <!-- add link to offer section -->
+            <a href="offer.jsp"><img class="d-block w-100" src="Book/Slider4.png" alt="Fourth slide"></a>
+            <div class="carousel-caption d-none d-md-block"></div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<!-- Start of Recent Books -->
+<div class="container-fluid" id="recent-books">
     <br>
-    <h3 class="text-center mt-4">New Books</h3>
+    <h3 class="text-center mt-4">Recent Books</h3>
     <div class="row">
-        <%
-        BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
-        List<BookDtls> list = dao.getNewBook();
-        for (BookDtls b : list) {
-        %>
         <div class="col-md-3 col-sm-6 mb-4">
             <div class="card-container">
                 <div class="card fs-1-custom">
                     <div class="card-body text-center">
-                        <img alt="<%= b.getBookName() %>" src="Book/<%= b.getPhotoName() %>" class="img-thumbnail">
-                        <p>Book Name: <%= b.getBookName() %></p>
-                        <p>Author: <%= b.getAuthor() %></p>
-                        <p class="price">Price: <i class="fa-solid fa-indian-rupee-sign"></i> <%= b.getPrice() %></p>
-                        <div class="row-buttons">
-                            <a href="#" class="btn btn-primary btn-custom">
-                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                            </a>
-                            &nbsp;
-                            <a href="#" class="btn btn-outline-primary btn-custom">View Details</a>
+                        <img alt="Energize Your Mind" src="Book/RBook1.png" class="img-thumbnail">
+                        <p>Book Name : Energize Your Mind</p>
+                        <p>Author : Gaur Gopal Das</p>
+                        <p class="price">Price : Rs 178</p>
+                        <div class="row-buttons text-left">
+                            <a href="#" class="btn btn-primary btn-custom "> <i class="fa-solid fa-cart-shopping"></i> Add to Cart </a>&nbsp; 
+                            <a href="#" class="btn btn-outline-primary btn-custom"> View Details </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <%
-        }
-        %>
-    </div>
-</div>
-	
-	<!--End of New Books-->
-
-	<!--Start of Old Books-->
-<div class="container-fluid" id="old-books">
-    <br>
-    <h3 class="text-center mt-4">Old Books</h3>
-    <div class="row">
-        <%
-        // Fetch old books from database
-        BookDAOImpl dao1 = new BookDAOImpl(DBConnect.getConn());
-        List<BookDtls> oldBooks = dao1.getOldBooks();
-        for (BookDtls b : oldBooks) {
-        %>
         <div class="col-md-3 col-sm-6 mb-4">
             <div class="card-container">
                 <div class="card fs-1-custom">
                     <div class="card-body text-center">
-                        <img alt="<%= b.getBookName() %>" src="Book/<%= b.getPhotoName() %>" class="img-thumbnail">
-                        <p>Book Name: <%= b.getBookName() %></p>
-                        <p>Author: <%= b.getAuthor() %></p>
-                        <p class="price">Price: <i class="fa-solid fa-indian-rupee-sign"></i> <%= b.getPrice() %></p>
-                        <a href="#" class="btn btn-outline-primary btn-custom text-center">View Details</a>
+                        <img alt="Build, Dont Talk" src="Book/RBook2.png" class="img-thumbnail">
+                        <p>Book Name : Build, Dont Talk</p>
+                        <p>Author : Raj Shamani</p>
+                        <p class="price">Price : Rs 230</p>
+                        <div class="row-buttons">
+                            <a href="#" class="btn btn-primary btn-custom"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart </a>&nbsp; 
+                            <a href="#" class="btn btn-outline-primary btn-custom"> View Details </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <%
-        }
-        %>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card-container">
+                <div class="card fs-1-custom">
+                    <div class="card-body text-center">
+                        <img alt="THE ART OF HAPPINESS" src="Book/RBook3.png" class="img-thumbnail">
+                        <p>Book Name : THE ART OF HAPPINESS</p>
+                        <p>Author : The Dalai Lama</p>
+                        <p class="price">Price : Rs 345</p>
+                        <div class="row-buttons">
+                            <a href="#" class="btn btn-primary btn-custom"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart </a>&nbsp;&nbsp; 
+                            <a href="#" class="btn btn-outline-primary btn-custom"> View Details </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card-container">
+                <div class="card fs-1-custom">
+                    <div class="card-body text-center">
+                        <img alt="Here There and Everywhere" src="Book/Sudha Murty.png" class="img-thumbnail">
+                        <p>Book Name : Here There and Everywhere</p>
+                        <p>Author : Sudha Murty</p>
+                        <p class="price">Price : Rs 450</p>
+                        <div class="row-buttons">
+                            <a href="#" class="btn btn-primary btn-custom"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart </a>&nbsp; 
+                            <a href="#" class="btn btn-outline-primary btn-custom"> View Details </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<!-- End of Recent Books -->
+
+	<!--Start of New Books-->
+	<div class="container-fluid" id="new-books">
+		<br>
+		<h3 class="text-center mt-4">New Books</h3>
+		<div class="row">
+			<%
+			BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
+			List<BookDtls> list = dao.getNewBook();
+			for (BookDtls b : list) {
+			%>
+			<div class="col-md-3 col-sm-6 mb-4">
+				<div class="card-container">
+					<div class="card fs-1-custom">
+						<div class="card-body text-center">
+							<img alt="<%=b.getBookName()%>"
+								src="Book/<%=b.getPhotoName()%>" class="img-thumbnail">
+							<p>
+								Book Name:
+								<%=b.getBookName()%></p>
+							<p>
+								Author:
+								<%=b.getAuthor()%></p>
+							<p class="price">
+								Price: <i class="fa-solid fa-indian-rupee-sign"></i>
+								<%=b.getPrice()%></p>
+							<div class="row-buttons">
+								<%
+								if (u == null) {
+								%>
+								<a href="login.jsp" class="btn btn-primary btn-custom"> <i
+									class="fa-solid fa-cart-shopping"></i> Add to Cart
+								</a>
+								<%
+								} else {
+								%>
+								<a
+									href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>"
+									class="btn btn-primary btn-custom"> <i
+									class="fa-solid fa-cart-shopping"></i> Add to Cart
+								</a>
+								<%
+								}
+								%>
+								&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">View
+									Details</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%
+			}
+			%>
+		</div>
+	</div>
+
+	<!--End of New Books-->
+
+	<!--Start of Old Books-->
+	<div class="container-fluid" id="old-books">
+		<br>
+		<h3 class="text-center mt-4">Old Books</h3>
+		<div class="row">
+			<%
+			// Fetch old books from database
+			BookDAOImpl dao1 = new BookDAOImpl(DBConnect.getConn());
+			List<BookDtls> oldBooks = dao1.getOldBooks();
+			for (BookDtls b : oldBooks) {
+			%>
+			<div class="col-md-3 col-sm-6 mb-4">
+				<div class="card-container">
+					<div class="card fs-1-custom">
+						<div class="card-body text-center">
+							<img alt="<%=b.getBookName()%>"
+								src="Book/<%=b.getPhotoName() %>" class="img-thumbnail">
+							<p>
+								Book Name:
+								<%=b.getBookName()%></p>
+							<p>
+								Author:
+								<%=b.getAuthor()%></p>
+							<p class="price">
+								Price: <i class="fa-solid fa-indian-rupee-sign"></i>
+								<%=b.getPrice()%></p>
+							<a href="#"
+								class="btn btn-outline-primary btn-custom text-center">View
+								Details</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%
+			}
+			%>
+		</div>
+	</div>
 	<!--End of Old Books-->
 
 	<%@include file="All_Component/footer.jsp"%>
