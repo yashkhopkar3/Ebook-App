@@ -213,5 +213,68 @@ public class BookDAOImpl implements BookDAO {
         return list;
     }
 
+	@Override
+	public boolean addRecentBook(BookDtls book) {
+	    boolean f = false;
+	    try {
+	        String query = "INSERT INTO recent_books (bookId, bookname, author, price, bookCategory, status, photo, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	        PreparedStatement ps = conn.prepareStatement(query);
+	        ps.setInt(1, book.getBookId());
+	        ps.setString(2, book.getBookName());
+	        ps.setString(3, book.getAuthor());
+	        ps.setString(4, book.getPrice());
+	        ps.setString(5, book.getBookCategory());
+	        ps.setString(6, book.getStatus());
+	        ps.setString(7, book.getPhotoName());
+	        ps.setString(8, book.getEmail());
+	        int i = ps.executeUpdate();
+	        if (i == 1) {
+	            f = true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return f;
+	}
+
+
+	@Override
+	public List<BookDtls> getRecentBooks() {
+	    List<BookDtls> list = new ArrayList<>();
+	    try {
+	        // Check and manage the recent books limit
+	        String countQuery = "SELECT COUNT(*) FROM recent_books";
+	        PreparedStatement psCount = conn.prepareStatement(countQuery);
+	        ResultSet rsCount = psCount.executeQuery();
+	        if (rsCount.next() && rsCount.getInt(1) > 25) {
+	            String deleteQuery = "DELETE FROM recent_books WHERE bId IN (SELECT bId FROM (SELECT bId FROM recent_books ORDER BY bId ASC LIMIT 5) subquery)";
+	            PreparedStatement psDelete = conn.prepareStatement(deleteQuery);
+	            psDelete.executeUpdate();
+	        }
+
+	        // Fetch recent books
+	        String query = "SELECT * FROM recent_books rb WHERE rb.bId IN (SELECT MAX(rb2.bId) FROM recent_books rb2 GROUP BY rb2.bookname, rb2.author, rb2.price, rb2.bookCategory, rb2.status, rb2.photo, rb2.email) ORDER BY rb.bId DESC LIMIT 4";
+	        PreparedStatement ps = conn.prepareStatement(query);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            BookDtls b = new BookDtls();
+	            b.setBookId(rs.getInt("bookId"));
+	            b.setBookName(rs.getString("bookname"));
+	            b.setAuthor(rs.getString("author"));
+	            b.setPrice(rs.getString("price"));
+	            b.setBookCategory(rs.getString("bookCategory"));
+	            b.setStatus(rs.getString("status"));
+	            b.setPhotoName(rs.getString("photo"));
+	            b.setEmail(rs.getString("email"));
+	            list.add(b);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+
+
+
     
 }

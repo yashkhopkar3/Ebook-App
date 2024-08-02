@@ -14,69 +14,88 @@
 <title>BookMart</title>
 <%@include file="All_Component/AllCSS.jsp"%>
 <style type="text/css">
+/* General Styles */
 .back-img {
-	background: url("Book/Bookbg.jpg") center center/cover no-repeat;
-	height: 50vh;
-	width: 100%;
+    background: url("Book/Bookbg.jpg") center center/cover no-repeat;
+    height: 50vh;
+    width: 100%;
 }
 
 .fs-1-custom {
-	font-size: 12px;
-	font-weight: bold;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .card-body img {
-	width: 100%;
-	height: 250px;
+    width: 100%;
+    height: 250px;
 }
 
 .price {
-	font-size: 12px;
-	color: #28a745;
-}
-
-.btn-custom:first-child {
-	font-size: 12px;
-	padding: 5px 5px;
-	margin-left: -10px;
-}
-
-.btn-custom .fa {
-	margin-right: 2px;
-}
-
-.row-buttons {
-	display: flex;
-	margin-left: 0px;
-	justify-content: space-between;
-}
-
-@media ( max-width : 576px) {
-	.row-buttons {
-		flex-direction: column;
-	}
-	.row-buttons a {
-		
-	}
-}
-
-.carousel-inner img {
-	width: 100%;
-	height: 50vh;
-	object-fit: cover;
-}
-
-.carousel-caption h2 {
-	background-color: rgba(0, 0, 0, 0.5);
-	padding: 0.5rem;
-	border-radius: 0.5rem;
+    font-size: 12px;
+    color: #28a745;
 }
 
 .card-container {
-	width: 100%;
-	max-width: 250px;
-	margin: 0 auto;
-	padding: 15px;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+    padding: 15px;
+    
+}
+
+.carousel-inner img {
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+}
+
+.carousel-caption h2 {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+/* Buttons */
+.btn-custom {
+    font-size: 13px; /* Default font size for buttons */
+    padding: 7px 12px; /* Default padding for buttons */
+}
+
+.btn-custom.no-cart {
+    font-size: 11px; /* Increased font size when "Add to Cart" is not present */
+    padding: 7px 10px; /* Larger padding when "Add to Cart" is not present */
+}
+
+.btn-custom:first-child {
+    font-size: 13px;
+    padding: 5px 5px;
+    margin-left: -10px;
+}
+
+.btn-custom .fa {
+    margin-right: 2px;
+}
+
+/* Buttons Alignment */
+.row-buttons {
+    display: flex;
+    margin-left: 0px;
+    justify-content: space-between; /* Space between buttons by default */
+}
+
+.row-buttons.no-cart {
+    justify-content: center; /* Center buttons when "Add to Cart" is not present */
+}
+
+.row-buttons .btn-outline-primary {
+    font-size: 13px; /* Default font size for "View Details" button */
+    padding: 7px 12px; /* Default padding for "View Details" button */
+}
+
+.row-buttons.no-cart .btn-outline-primary {
+    font-size: 14px; /* Increased font size for "View Details" button when "Add to Cart" is not present */
+    padding: 10px 15px; /* Larger padding for "View Details" button when "Add to Cart" is not present */
 }
 
 /* Toast Container */
@@ -134,7 +153,12 @@
     animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
 }
 
-
+@media (max-width: 576px) {
+    .row-buttons {
+        flex-direction: column;
+        align-items: center; /* Center buttons on small screens */
+    }
+}
 
 </style>
 </head>
@@ -198,77 +222,64 @@ User u = (User) session.getAttribute("userobj");
         <span class="sr-only">Next</span>
     </a>
 </div>
-<!-- Start of Recent Books -->
+<%-- Start of Recent Books --%>
+<%
+BookDAOImpl dao2 = new BookDAOImpl(DBConnect.getConn());
+List<BookDtls> recentBooks = dao2.getRecentBooks();
+if (recentBooks.size() > 2) {
+%>
 <div class="container-fluid" id="recent-books">
     <br>
     <h3 class="text-center mt-4">Recent Books</h3>
     <div class="row">
+        <%
+        for (BookDtls b : recentBooks) {
+            boolean isAvailable = "available".equalsIgnoreCase(b.getStatus());
+        %>
         <div class="col-md-3 col-sm-6 mb-4">
             <div class="card-container">
                 <div class="card fs-1-custom">
                     <div class="card-body text-center">
-                        <img alt="Energize Your Mind" src="Book/RBook1.png" class="img-thumbnail">
-                        <p>Book Name : Energize Your Mind</p>
-                        <p>Author : Gaur Gopal Das</p>
-                        <p class="price">Price : Rs 178</p>
-                        <div class="row-buttons text-left">
-                            <a href="#" class="btn btn-primary btn-custom "> <i class="fa-solid fa-cart-shopping"></i> Add to Cart </a>&nbsp; 
-                            <a href="#" class="btn btn-outline-primary btn-custom"> View Details </a>
+                        <img alt="<%=b.getBookName()%>" src="Book/<%=b.getPhotoName()%>" class="img-thumbnail">
+                        <p>Book Name: <%=b.getBookName()%></p>
+                        <p>Author: <%=b.getAuthor()%></p>
+                        <p class="price">Price: <i class="fa-solid fa-indian-rupee-sign"></i> <%=b.getPrice()%></p>
+                        <div class="row-buttons <%= isAvailable ? "" : "no-cart" %>">
+                            <%
+                            if (isAvailable) {
+                                if (u == null) {
+                            %>
+                            <a href="login.jsp" class="btn btn-primary btn-custom">
+                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                            </a>
+                            <%
+                                } else {
+                            %>
+                            <a href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>" class="btn btn-primary btn-custom">
+                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                            </a>
+                            <%
+                                }
+                            }
+                            %>
+                            &nbsp; 
+                            <a href="view_books.jsp?bid=<%=b.getBookId()%>" class="btn btn-outline-primary btn-custom <%= isAvailable ? "" : "no-cart" %>">
+                                View Details
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6 mb-4">
-            <div class="card-container">
-                <div class="card fs-1-custom">
-                    <div class="card-body text-center">
-                        <img alt="Build, Dont Talk" src="Book/RBook2.png" class="img-thumbnail">
-                        <p>Book Name : Build, Dont Talk</p>
-                        <p>Author : Raj Shamani</p>
-                        <p class="price">Price : Rs 230</p>
-                        <div class="row-buttons">
-                            <a href="#" class="btn btn-primary btn-custom"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart </a>&nbsp; 
-                            <a href="#" class="btn btn-outline-primary btn-custom"> View Details </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6 mb-4">
-            <div class="card-container">
-                <div class="card fs-1-custom">
-                    <div class="card-body text-center">
-                        <img alt="THE ART OF HAPPINESS" src="Book/RBook3.png" class="img-thumbnail">
-                        <p>Book Name : THE ART OF HAPPINESS</p>
-                        <p>Author : The Dalai Lama</p>
-                        <p class="price">Price : Rs 345</p>
-                        <div class="row-buttons">
-                            <a href="#" class="btn btn-primary btn-custom"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart </a>&nbsp;&nbsp; 
-                            <a href="#" class="btn btn-outline-primary btn-custom"> View Details </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6 mb-4">
-            <div class="card-container">
-                <div class="card fs-1-custom">
-                    <div class="card-body text-center">
-                        <img alt="Here There and Everywhere" src="Book/Sudha Murty.png" class="img-thumbnail">
-                        <p>Book Name : Here There and Everywhere</p>
-                        <p>Author : Sudha Murty</p>
-                        <p class="price">Price : Rs 450</p>
-                        <div class="row-buttons">
-                            <a href="#" class="btn btn-primary btn-custom"> <i class="fa-solid fa-cart-shopping"></i> Add to Cart </a>&nbsp; 
-                            <a href="#" class="btn btn-outline-primary btn-custom"> View Details </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%
+        }
+        %>
     </div>
 </div>
+<%
+}
+%>
+
 <!-- End of Recent Books -->
 
 	<!--Start of New Books-->
@@ -314,7 +325,7 @@ User u = (User) session.getAttribute("userobj");
 								<%
 								}
 								%>
-								&nbsp; <a href="#" class="btn btn-outline-primary btn-custom">View
+								&nbsp; <a href="view_books.jsp?bid=<%=b.getBookId()%>" class="btn btn-outline-primary btn-custom">View
 									Details</a>
 							</div>
 						</div>
@@ -355,7 +366,7 @@ User u = (User) session.getAttribute("userobj");
 							<p class="price">
 								Price: <i class="fa-solid fa-indian-rupee-sign"></i>
 								<%=b.getPrice()%></p>
-							<a href="#"
+							<a href="view_books.jsp?bid=<%=b.getBookId()%>"
 								class="btn btn-outline-primary btn-custom text-center">View
 								Details</a>
 						</div>

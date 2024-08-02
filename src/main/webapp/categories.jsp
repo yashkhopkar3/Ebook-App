@@ -206,7 +206,7 @@ to {
 			}
 		}
 
-		out.println("<a href='#' class='btn btn-outline-primary btn-custom'>");
+		out.println("<a href='view_books.jsp?bid="+ bookId+"' class='btn btn-outline-primary btn-custom'>");
 		out.println("View Details");
 		out.println("</a>");
 		out.println("</div>");
