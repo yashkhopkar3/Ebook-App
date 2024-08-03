@@ -200,7 +200,7 @@ to {
 				out.println("</a>");
 			} else {
 				out.println("<a href='cart?bid=" + bookId + "&&uid=" + u.getId()
-						+ "' class='btn btn-primary btn-custom'>");
+						+ "&addCart=true' class='btn btn-primary btn-custom'>");
 				out.println("<i class='fa-solid fa-cart-shopping'></i> Add to Cart");
 				out.println("</a>");
 			}

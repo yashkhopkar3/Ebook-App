@@ -163,25 +163,33 @@
 </style>
 </head>
 <body>
-
-<c:if test="${not empty addCart}">
-    <div id="toast">${addCart}</div>
-
-<script type="text/javascript">
-		showToast();
-		function showToast(content)
-		{
-		    $('#toast').addClass("display");
-		    $('#toast').html(content);
-		    setTimeout(()=>{
-		        $("#toast").removeClass("display");
-		    },2000)
-		}	
-</script>
-</c:if>
 <%
 User u = (User) session.getAttribute("userobj");
 %>
+
+<%
+if (request.getParameter("addCart") != null) {
+    session.setAttribute("addCartMessage", "Book added to cart successfully!");
+    response.sendRedirect("index.jsp");
+    return;
+}
+%>
+<c:if test="${not empty sessionScope.addCartMessage}">
+    <div id="toast">${sessionScope.addCartMessage}</div>
+    <script type="text/javascript">
+        showToast();
+        function showToast() {
+            $('#toast').addClass("display");
+            setTimeout(() => {
+                $("#toast").removeClass("display");
+            }, 2000);
+        }
+    </script>
+    <%
+        session.removeAttribute("addCartMessage");
+    %>
+</c:if>
+
 <%@include file="All_Component/Navbar.jsp"%>
 
 
@@ -255,7 +263,7 @@ if (recentBooks.size() > 2) {
                             <%
                                 } else {
                             %>
-                            <a href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>" class="btn btn-primary btn-custom">
+                            <a href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>&addCart=true" class="btn btn-primary btn-custom">
                                 <i class="fa-solid fa-cart-shopping"></i> Add to Cart
                             </a>
                             <%
@@ -318,7 +326,7 @@ if (recentBooks.size() > 2) {
 								} else {
 								%>
 								<a
-									href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>"
+									href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>&addCart=true"
 									class="btn btn-primary btn-custom"> <i
 									class="fa-solid fa-cart-shopping"></i> Add to Cart
 								</a>

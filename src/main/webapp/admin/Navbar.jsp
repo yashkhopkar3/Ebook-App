@@ -14,7 +14,7 @@
         <div class="col-md-3 text-right">
             <c:choose>
                 <c:when test="${not empty userobj}">
-                    <span class="mr-2">Welcome, ${userobj.name}</span>
+                    <span class="mr-2"><i class="fa-solid fa-user"></i> ${userobj.name}</span>
                     <a class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
                 </c:when>
                 <c:otherwise>

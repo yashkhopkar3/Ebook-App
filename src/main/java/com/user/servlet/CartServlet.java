@@ -19,33 +19,37 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            // Retrieve bid and uid parameters from the request
-            int bid = Integer.parseInt(req.getParameter("bid"));
-            int uid = Integer.parseInt(req.getParameter("uid"));
+            // Check if addCart parameter is present
+            if ("true".equals(req.getParameter("addCart"))) {
+                // Retrieve bid and uid parameters from the request
+                int bid = Integer.parseInt(req.getParameter("bid"));
+                int uid = Integer.parseInt(req.getParameter("uid"));
 
-            // Get book details by ID
-            BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
-            BookDtls b = dao.getBookbyId(bid);
+                // Get book details by ID
+                BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
+                BookDtls b = dao.getBookbyId(bid);
 
-            // Create a new Cart object and set its properties
-            Cart c = new Cart();
-            c.setBid(bid);
-            c.setUid(uid);
-            c.setBookName(b.getBookName());
-            c.setAuthor(b.getAuthor());
-            c.setPrice(Double.parseDouble(b.getPrice()));
-            c.setTotalPrice(Double.parseDouble(b.getPrice()));
+                // Create a new Cart object and set its properties
+                Cart c = new Cart();
+                c.setBid(bid);
+                c.setUid(uid);
+                c.setBookName(b.getBookName());
+                c.setAuthor(b.getAuthor());
+                c.setPrice(Double.parseDouble(b.getPrice()));
+                c.setTotalPrice(Double.parseDouble(b.getPrice()));
 
-            CartDAOImpl cartDao = new CartDAOImpl(DBConnect.getConn());
-            boolean result = cartDao.addCart(c);
+                CartDAOImpl cartDao = new CartDAOImpl(DBConnect.getConn());
+                boolean result = cartDao.addCart(c);
 
-            HttpSession session = req.getSession();
+                HttpSession session = req.getSession();
 
-            if (result) {
-                session.setAttribute("addCart", "Book Added to Cart");
-            } else {
-                session.setAttribute("failed", "Something Went Wrong on the Server");
+                if (result) {
+                    session.setAttribute("addCartMessage", "Book added to cart successfully!");
+                } else {
+                    session.setAttribute("addCartMessage", "Something went wrong on the server");
+                }
             }
+
             resp.sendRedirect("index.jsp");
 
         } catch (Exception e) {
