@@ -4,6 +4,7 @@
 <%@ page import="com.entity.BookDtls"%>
 <%@ page import="com.DB.DBConnect"%>
 <%@ page import="com.DAO.BookDAOImpl"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,9 +87,17 @@
 				} else {
 				%>
 				<div class=" text-center p-3">
+				<% if(u!=null){ %>
 					<a href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>"
 						class="btn btn-primary"><i class="fas fa-cart-plus"></i> Add
-						Cart</a> <a href="" class="btn btn-danger"><i
+						Cart</a> 
+				<%} else { %>	
+				<a href="login.jsp"
+						class="btn btn-primary"><i class="fas fa-cart-plus"></i> Add
+						Cart</a> 
+				<%} %>	
+						
+						<a href="" class="btn btn-danger"><i
 						class="fas fa-rupee-sign"></i>200</a>
 				</div>
 				<%
