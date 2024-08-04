@@ -3,6 +3,7 @@ package com.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,20 @@ public class CartDAOImpl implements CartDAO {
 	            e.printStackTrace();
 	        }
 	        return cartItems;
+	}
+
+	@Override
+	public boolean RemoveCart(int cid,int uid) {
+		 String query = "DELETE FROM cart WHERE cid = ? and uid=?";
+	        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	            pstmt.setInt(1, cid);
+	            pstmt.setInt(2, uid);
+	            int rowsAffected = pstmt.executeUpdate();
+	            return rowsAffected > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
 	}
 
 }

@@ -8,4 +8,5 @@ public interface CartDAO {
 
 	public boolean addCart(Cart c);
 	 public List<Cart> getCartItems(int uid);
+	 public boolean RemoveCart(int cid,int uid);
 }
