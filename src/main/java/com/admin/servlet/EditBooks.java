@@ -23,6 +23,7 @@ public class EditBooks extends HttpServlet {
         String price = req.getParameter("price");
         String bookCategories = req.getParameter("bookCategories");
         String bookStatus = req.getParameter("bookStatus");
+        int copies=Integer.parseInt(req.getParameter("copies"));
 
 
         BookDtls book = new BookDtls();
@@ -32,6 +33,7 @@ public class EditBooks extends HttpServlet {
         book.setPrice(price);
         book.setBookCategory(bookCategories);
         book.setStatus(bookStatus);
+        book.setCopies(copies);
 
         BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
         boolean isUpdated = dao.UpdateEditBooks(book);

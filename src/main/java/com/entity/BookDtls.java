@@ -10,13 +10,26 @@ public class BookDtls {
 	private String status;
 	private String photoName;
 	private String email;
+	private int copies; 
 	
 	
+	public int getCopies() {
+		return copies;
+	}
+
+
+	public void setCopies(int copies) {
+		this.copies = copies;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "BookDtls [bookId=" + bookId + ", bookName=" + bookName + ", author=" + author + ", price=" + price
 				+ ", bookCategory=" + bookCategory + ", status=" + status + ", photoName=" + photoName + ", email="
-				+ email + "]";
+				+ email + ", copies=" + copies + "]";
 	}
 
 
@@ -101,7 +114,7 @@ public class BookDtls {
 
 
 	public BookDtls(String bookName, String author, String price, String bookCategory, String status, String photoName,
-			String email) {
+			String email,int copies) {
 		super();
 		this.bookName = bookName;
 		this.author = author;
@@ -110,6 +123,7 @@ public class BookDtls {
 		this.status = status;
 		this.photoName = photoName;
 		this.email = email;
+		this.copies=copies;
 	}
 
 

@@ -8,12 +8,21 @@ public class Cart {
     private String author;
     private double price;
     private double totalPrice;
+    private int copies;
 
-    // Default constructor
+    public int getCopies() {
+		return copies;
+	}
+
+	public void setCopies(int copies) {
+		this.copies = copies;
+	}
+
+	// Default constructor
     public Cart() {}
 
     // Parameterized constructor
-    public Cart(int cid, int bid, int uid, String bookName, String author, double price, double totalPrice) {
+    public Cart(int cid, int bid, int uid, String bookName, String author, double price, double totalPrice,int copies) {
         this.cid = cid;
         this.bid = bid;
         this.uid = uid;
@@ -21,6 +30,7 @@ public class Cart {
         this.author = author;
         this.price = price;
         this.totalPrice = totalPrice;
+        this.copies=copies;
     }
 
     // Getter and setter methods
@@ -80,9 +90,10 @@ public class Cart {
         this.totalPrice = totalPrice;
     }
 
-    @Override
-    public String toString() {
-        return "Cart [cid=" + cid + ", bid=" + bid + ", uid=" + uid + ", bookName=" + bookName + 
-               ", author=" + author + ", price=" + price + ", totalPrice=" + totalPrice + "]";
-    }
+	@Override
+	public String toString() {
+		return "Cart [cid=" + cid + ", bid=" + bid + ", uid=" + uid + ", bookName=" + bookName + ", author=" + author
+				+ ", price=" + price + ", totalPrice=" + totalPrice + ", copies=" + copies + "]";
+	}
+
 }

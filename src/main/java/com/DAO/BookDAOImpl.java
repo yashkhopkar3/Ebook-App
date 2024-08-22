@@ -20,7 +20,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public boolean addBooks(BookDtls b) {
         boolean result = false;
-        String sql = "INSERT INTO book_dtls (bookname, author, price, bookCategory, status, photo, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO book_dtls (bookname, author, price, bookCategory, status, photo, email, copies) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, b.getBookName());
@@ -30,6 +30,7 @@ public class BookDAOImpl implements BookDAO {
             ps.setString(5, b.getStatus());
             ps.setString(6, b.getPhotoName());
             ps.setString(7, b.getEmail());
+            ps.setInt(8, b.getCopies()); // Adding copies
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -62,6 +63,7 @@ public class BookDAOImpl implements BookDAO {
                 b.setStatus(rs.getString("status"));
                 b.setPhotoName(rs.getString("photo"));
                 b.setEmail(rs.getString("email"));
+                b.setCopies(rs.getInt("copies"));
                 list.add(b);
             }
         } catch (SQLException e) {
@@ -90,6 +92,8 @@ public class BookDAOImpl implements BookDAO {
                 b.setStatus(rs.getString("status"));
                 b.setPhotoName(rs.getString("photo"));
                 b.setEmail(rs.getString("email"));
+                b.setCopies(rs.getInt("copies"));
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,7 +104,10 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public boolean UpdateEditBooks(BookDtls b) {
         boolean result = false;
-        String sql = "UPDATE book_dtls SET bookname = ?, author = ?, price = ?, bookCategory = ?, status = ? WHERE bookId = ?";
+        if (b.getCopies() == 0) {
+            b.setStatus("Unavailable");
+        }
+        String sql = "UPDATE book_dtls SET bookname = ?, author = ?, price = ?, bookCategory = ?, status = ?, copies=? WHERE bookId = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, b.getBookName());
@@ -108,7 +115,31 @@ public class BookDAOImpl implements BookDAO {
             ps.setString(3, b.getPrice());
             ps.setString(4, b.getBookCategory());
             ps.setString(5, b.getStatus());
-            ps.setInt(6, b.getBookId());
+            ps.setInt(6, b.getCopies());
+            ps.setInt(7, b.getBookId());
+            
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        String sq = "UPDATE recent_books SET bookname = ?, author = ?, price = ?, bookCategory = ?, status = ?, copies=? WHERE bookId = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sq)) {
+            ps.setString(1, b.getBookName());
+            ps.setString(2, b.getAuthor());
+            ps.setString(3, b.getPrice());
+            ps.setString(4, b.getBookCategory());
+            ps.setString(5, b.getStatus());
+            ps.setInt(6, b.getCopies());
+            ps.setInt(7, b.getBookId());
+            
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -180,6 +211,12 @@ public class BookDAOImpl implements BookDAO {
         List<BookDtls> list = new ArrayList<>();
         BookDtls b = null;
         try {
+        	String updateStatusSql = "UPDATE book_dtls SET status = 'Unavailable' WHERE copies = 0";
+            PreparedStatement updatePs = conn.prepareStatement(updateStatusSql);
+            updatePs.executeUpdate();
+            String updateStatusSql2 = "UPDATE book_dtls SET status = 'Available' WHERE CAST(copies AS UNSIGNED)> 0";
+            PreparedStatement upPs = conn.prepareStatement(updateStatusSql2);
+            upPs.executeUpdate();
             // SQL query to fetch the oldest books in each category
             String sql = "WITH ranked_books AS (" +
                          "    SELECT bookId, bookname, author, price, bookCategory, status, photo, email, " +
@@ -212,13 +249,22 @@ public class BookDAOImpl implements BookDAO {
         }
         return list;
     }
-
+    
 	@Override
 	public boolean addRecentBook(BookDtls book) {
 	    boolean f = false;
+	    PreparedStatement ps = null;
+	    
 	    try {
-	        String query = "INSERT INTO recent_books (bookId, bookname, author, price, bookCategory, status, photo, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-	        PreparedStatement ps = conn.prepareStatement(query);
+	        // Delete the existing record if the bookId is already present
+	        String deleteQuery = "DELETE FROM recent_books WHERE bookId = ?";
+	        ps = conn.prepareStatement(deleteQuery);
+	        ps.setInt(1, book.getBookId());
+	        ps.executeUpdate();
+	        
+	        // Insert the new record
+	        String query = "INSERT INTO recent_books (bookId, bookname, author, price, bookCategory, status, photo, email, copies) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	        ps = conn.prepareStatement(query);
 	        ps.setInt(1, book.getBookId());
 	        ps.setString(2, book.getBookName());
 	        ps.setString(3, book.getAuthor());
@@ -227,21 +273,39 @@ public class BookDAOImpl implements BookDAO {
 	        ps.setString(6, book.getStatus());
 	        ps.setString(7, book.getPhotoName());
 	        ps.setString(8, book.getEmail());
+	        ps.setInt(9, book.getCopies());
 	        int i = ps.executeUpdate();
+	        
 	        if (i == 1) {
 	            f = true;
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
+	    } finally {
+	        // Ensure resources are closed
+	        try {
+	            if (ps != null) ps.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 	    }
 	    return f;
 	}
 
 
+
 	@Override
 	public List<BookDtls> getRecentBooks() {
+		
 	    List<BookDtls> list = new ArrayList<>();
 	    try {
+	    	
+	    	String updateStatusSql = "UPDATE recent_books SET status = 'Unavailable' WHERE copies = 0";
+            PreparedStatement updatePs = conn.prepareStatement(updateStatusSql);
+            updatePs.executeUpdate();
+            String updateStatusSql2 = "UPDATE recent_books SET status = 'Available' WHERE CAST(copies AS UNSIGNED)> 0";
+            PreparedStatement upPs = conn.prepareStatement(updateStatusSql2);
+            upPs.executeUpdate();
 	        // Check and manage the recent books limit
 	        String countQuery = "SELECT COUNT(*) FROM recent_books";
 	        PreparedStatement psCount = conn.prepareStatement(countQuery);
@@ -253,7 +317,7 @@ public class BookDAOImpl implements BookDAO {
 	        }
 
 	        // Fetch recent books
-	        String query = "SELECT * FROM recent_books rb WHERE rb.bId IN (SELECT MAX(rb2.bId) FROM recent_books rb2 GROUP BY rb2.bookname, rb2.author, rb2.price, rb2.bookCategory, rb2.status, rb2.photo, rb2.email) ORDER BY rb.bId DESC LIMIT 4";
+	        String query = "SELECT * FROM recent_books rb WHERE rb.bId IN (SELECT MAX(rb2.bId) FROM recent_books rb2 GROUP BY rb2.bookname, rb2.author, rb2.price, rb2.bookCategory, rb2.status, rb2.photo, rb2.email, rb2.copies) ORDER BY rb.bId DESC LIMIT 4";
 	        PreparedStatement ps = conn.prepareStatement(query);
 	        ResultSet rs = ps.executeQuery();
 	        while (rs.next()) {
@@ -266,6 +330,7 @@ public class BookDAOImpl implements BookDAO {
 	            b.setStatus(rs.getString("status"));
 	            b.setPhotoName(rs.getString("photo"));
 	            b.setEmail(rs.getString("email"));
+	            b.setCopies(rs.getInt("copies")); // Setting the copies field
 	            list.add(b);
 	        }
 	    } catch (Exception e) {

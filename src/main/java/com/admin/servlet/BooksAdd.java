@@ -32,11 +32,13 @@ public class BooksAdd extends HttpServlet {
 			String bookCategories = req.getParameter("bookCategories");
 
 			String bookStatus = req.getParameter("bookStatus");
+			
+			int copies=Integer.parseInt(req.getParameter("copies"));
 
 			Part part = req.getPart("uploadPhoto");
 			String uploadPhoto = part.getSubmittedFileName();
 
-			BookDtls b = new BookDtls(bookName, authorName, price, bookCategories, bookStatus, uploadPhoto, "admin");
+			BookDtls b = new BookDtls(bookName, authorName, price, bookCategories, bookStatus, uploadPhoto, "admin",copies);
 			
 			BookDAOImpl dao =new BookDAOImpl(DBConnect.getConn());
 			

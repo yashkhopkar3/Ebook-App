@@ -6,7 +6,8 @@ import com.entity.Cart;
 
 public interface CartDAO {
 
-	public boolean addCart(Cart c);
+	public boolean addCart(Cart c,int uid,int bid);
 	 public List<Cart> getCartItems(int uid);
 	 public boolean RemoveCart(int cid,int uid);
+	public boolean updateCartQuantity(int cid, int uid, int quantityChange);
 }

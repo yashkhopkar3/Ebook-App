@@ -39,7 +39,7 @@ public class CartServlet extends HttpServlet {
                 c.setTotalPrice(Double.parseDouble(b.getPrice()));
 
                 CartDAOImpl cartDao = new CartDAOImpl(DBConnect.getConn());
-                boolean result = cartDao.addCart(c);
+                boolean result = cartDao.addCart(c,uid,bid);
 
                 HttpSession session = req.getSession();
 

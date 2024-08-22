@@ -45,6 +45,7 @@
 </style>
 </head>
 <body>
+
 	<%@include file="All_Component/Navbar.jsp"%>
 	<c:if test="${not empty succMsg}">
 		<div class="alert alert-success" role="alert">${succMsg}</div>
@@ -66,6 +67,7 @@
 							<th>Book Name</th>
 							<th>Author</th>
 							<th>Price</th>
+							<th>Copies</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -85,6 +87,17 @@
 							<td><%=item.getBookName()%></td>
 							<td><%=item.getAuthor()%></td>
 							<td><%=item.getPrice()%></td>
+							<td class="col-4">
+								<form action="updateCartQuantity" method="post" class="d-inline">
+									<input type="hidden" name="cid" value="<%=item.getCid()%>">
+									<button type="submit" name="action" value="decrease"
+										class="btn btn-outline-secondary btn-sm px-2">-</button>
+									<span class="mx-2 fs-5"><%=item.getCopies()%></span>
+									<button type="submit" name="action" value="increase"
+										class="btn btn-outline-secondary btn-sm px-2">+</button>
+								</form>
+							</td>
+
 							<td><a
 								href="removeCart?cid=<%=item.getCid()%>&uid=<%=u.getId()%>"
 								class="btn btn-danger">Remove</a></td>
