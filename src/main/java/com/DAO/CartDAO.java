@@ -10,4 +10,5 @@ public interface CartDAO {
 	 public List<Cart> getCartItems(int uid);
 	 public boolean RemoveCart(int cid,int uid);
 	public boolean updateCartQuantity(int cid, int uid, int quantityChange);
+	public int getCartItemCount(int uid);
 }

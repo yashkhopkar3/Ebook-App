@@ -186,4 +186,26 @@ public class CartDAOImpl implements CartDAO {
 	        return false;
 	    }
 	}
+
+	@Override
+	public int getCartItemCount(int uid) {
+	    int count = 0;
+	    String query = "SELECT SUM(copies) FROM cart WHERE uid = ?";
+
+	    try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	        pstmt.setInt(1, uid);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                count = rs.getInt(1); // Get the sum of copies from the result set
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return count;
+	}
+
+	
+	
 }

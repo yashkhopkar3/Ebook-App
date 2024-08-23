@@ -20,21 +20,33 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public boolean addBooks(BookDtls b) {
         boolean result = false;
-        String sql = "INSERT INTO book_dtls (bookname, author, price, bookCategory, status, photo, email, copies) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String checkSql = "SELECT COUNT(*) FROM book_dtls WHERE bookname = ?";
+        String insertSql = "INSERT INTO book_dtls (bookname, author, price, bookCategory, status, photo, email, copies) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, b.getBookName());
-            ps.setString(2, b.getAuthor());
-            ps.setString(3, b.getPrice());
-            ps.setString(4, b.getBookCategory());
-            ps.setString(5, b.getStatus());
-            ps.setString(6, b.getPhotoName());
-            ps.setString(7, b.getEmail());
-            ps.setInt(8, b.getCopies()); // Adding copies
+        try (PreparedStatement checkPs = conn.prepareStatement(checkSql)) {
+            checkPs.setString(1, b.getBookName());
+            try (ResultSet rs = checkPs.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    // Book name already exists, do not insert
+                    return false;
+                }
+            }
 
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                result = true;
+            // If book does not exist, proceed with the insert
+            try (PreparedStatement insertPs = conn.prepareStatement(insertSql)) {
+                insertPs.setString(1, b.getBookName());
+                insertPs.setString(2, b.getAuthor());
+                insertPs.setString(3, b.getPrice());
+                insertPs.setString(4, b.getBookCategory());
+                insertPs.setString(5, b.getStatus());
+                insertPs.setString(6, b.getPhotoName());
+                insertPs.setString(7, b.getEmail());
+                insertPs.setInt(8, b.getCopies()); // Adding copies
+
+                int rowsAffected = insertPs.executeUpdate();
+                if (rowsAffected > 0) {
+                    result = true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,6 +54,7 @@ public class BookDAOImpl implements BookDAO {
 
         return result;
     }
+
 
     @Override
     public List<BookDtls> getALLBooks() {
@@ -218,19 +231,8 @@ public class BookDAOImpl implements BookDAO {
             PreparedStatement upPs = conn.prepareStatement(updateStatusSql2);
             upPs.executeUpdate();
             // SQL query to fetch the oldest books in each category
-            String sql = "WITH ranked_books AS (" +
-                         "    SELECT bookId, bookname, author, price, bookCategory, status, photo, email, " +
-                         "           ROW_NUMBER() OVER (PARTITION BY bookCategory ORDER BY bookId ASC) as rn " +
-                         "    FROM book_dtls " +
-                         "    WHERE status = ?" +
-                         ") " +
-                         "SELECT bookId, bookname, author, price, bookCategory, status, photo, email " +
-                         "FROM ranked_books " +
-                         "WHERE rn = 1 " +
-                         "ORDER BY RAND() " +
-                         "LIMIT 4";
+            String sql = "WITH unavailable_books AS ( SELECT bookId, bookname, author, price, bookCategory, status, photo, email FROM book_dtls WHERE status = 'Unavailable' ), ranked_books AS ( SELECT bookId, bookname, author, price, bookCategory, status, photo, email, ROW_NUMBER() OVER (PARTITION BY bookCategory ORDER BY bookId DESC) as rn FROM unavailable_books ) SELECT bookId, bookname, author, price, bookCategory, status, photo, email FROM ranked_books WHERE rn = 1 ORDER BY RAND() LIMIT 4;";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, "Unavailable");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 b = new BookDtls();
