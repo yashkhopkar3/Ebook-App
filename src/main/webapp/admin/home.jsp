@@ -72,7 +72,7 @@
 			<div class="col-md-4 d-flex align-items-stretch mb-3">
 				<div class="card text-center w-100">
 					<div class="card-body">
-						<a href="orders.jsp"> <i class="fas fa-box fa-3x text-warning"></i>
+						<a href="../allOrders"> <i class="fas fa-box fa-3x text-warning"></i>
 							<h5 class="card-title">Orders</h5>
 						</a>
 					</div>

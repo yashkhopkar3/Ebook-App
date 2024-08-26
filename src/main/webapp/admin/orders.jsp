@@ -15,42 +15,37 @@
 <c:if test="${empty userobj}">
 	<c:redirect url="../login.jsp" />
 	</c:if>
-<div class="container mt-5">
-    <h1 class="mb-4">Order List</h1>
-    <table class="table table-striped table-hover">
-        <thead class="thead-dark">
+<div class="container p-1">
+    <h3 class="text-center text-primary">Your Orders</h3>
+    <table class="table table-striped mt-3">
+        <thead class="bg-primary text-white">
             <tr>
-                <th scope="col">Order ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Address</th>
-                <th scope="col">Phone Number</th>
+                <th scope="col">Order Id</th>
+                <th scope="col">User Name</th>
                 <th scope="col">Book Name</th>
                 <th scope="col">Author</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
                 <th scope="col">Price</th>
                 <th scope="col">Payment Type</th>
+                <th scope="col">Copies</th>
+                
             </tr>
         </thead>
         <tbody>
-            <!-- Sample row data -->
-            <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>john.doe@example.com</td>
-                <td>123 Main St, Anytown, USA</td>
-                <td>(123) 456-7890</td>
-                <td>The Great Book</td>
-                <td>Jane Smith</td>
-                <td>$29.99</td>
-                <td>Credit Card</td>
-            </tr>
-            <!-- Add additional rows dynamically here -->
-            <!-- Example for no data -->
-            <!--
-            <tr>
-                <td colspan="9" class="text-center">No orders available</td>
-            </tr>
-            -->
+            <c:forEach var="order" items="${orders}">
+                <tr>
+                    <th scope="row">${order.orderId}</th>
+                    <td>${order.userName}</td>
+                    <td>${order.bookName}</td>
+                    <td>${order.author}</td>
+                    <td>${order.fulladd}</td>
+                    <td>${order.phno}</td>
+                    <td>${order.price}</td>
+                    <td>${order.paymentType}</td>
+                    <td>${order.copies}</td>
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
 </div>

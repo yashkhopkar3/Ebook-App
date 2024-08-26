@@ -26,7 +26,6 @@
 	<%
 	User u = (User) session.getAttribute("userobj");
 	%>
-
 	<div class="container p-3">
 		<div class="row">
 			<div class="col-md-6 text-center p-5 border bg-white">
@@ -79,7 +78,7 @@
 				if ("Unavailable".equals(b.getStatus())) {
 				%>
 				<div class=" text-center p-3">
-					<a href="" class="btn btn-success"><i class="fas fa-cart-plus"></i>
+					<a href="index.jsp" class="btn btn-success"><i class="fas fa-cart-plus"></i>
 						Continue Shopping</a> <a href="" class="btn btn-danger"><i
 						class="fas fa-rupee-sign"></i>200</a>
 				</div>

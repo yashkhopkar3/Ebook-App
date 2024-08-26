@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.servlet.http.HttpSession;
+
 import com.entity.User;
 
 public class UserDAOImpl implements UserDAO {
@@ -89,7 +91,69 @@ public class UserDAOImpl implements UserDAO {
 	    return exists;
 	}
 
-	
-	
+	@Override
+	public boolean checkPassword(int id, String ps) {
+		boolean f = false;
+		try {
+		String sql = "select * from user where id=? and password=?";
+		PreparedStatement pst = conn.prepareStatement(sql); pst.setInt(1, id);
+		pst.setString(2, ps);
+		ResultSet rs = pst.executeQuery();
+		while (rs.next()) {
+		f=true;
+		}
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		return f;
+		}
 
+	@Override
+	public User updateProfile(User us, HttpSession session) {
+	    boolean f = false;
+	    try {
+	        String sql = "UPDATE user SET name = ?, email = ?, phno = ? WHERE id = ?";
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, us.getName());
+	        ps.setString(2, us.getEmail());
+	        ps.setString(3, us.getPhno());
+	        ps.setInt(4, us.getId());
+	        int i = ps.executeUpdate();
+	        
+	        if (i == 1) {
+	            // Update the session attribute with the updated user information
+	            session.setAttribute("userobj", us);
+	            f = true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return f ? us : null;
+	}
+
+	@Override
+	public boolean updateUserDetails(User us) {
+		boolean isUpdated = false;
+        try {
+            String sql = "UPDATE user SET name = ?, email = ?, phno = ?, address = ?, landmark = ?, city = ?, state = ?, pincode = ? WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, us.getName());
+            ps.setString(2, us.getEmail());
+            ps.setString(3, us.getPhno());
+            ps.setString(4, us.getAddress());
+            ps.setString(5, us.getLandmark());
+            ps.setString(6, us.getCity());
+            ps.setString(7, us.getState());
+            ps.setString(8, us.getPincode());
+            ps.setInt(9, us.getId());
+
+            int i = ps.executeUpdate();
+            if (i == 1) {
+                isUpdated = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isUpdated;
+	}
 }

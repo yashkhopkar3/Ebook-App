@@ -11,7 +11,7 @@ import com.entity.BookDtls;
 
 public class BookDAOImpl implements BookDAO {
 
-    private Connection conn;
+    public Connection conn;
 
     public BookDAOImpl(Connection conn) {
         this.conn = conn;
@@ -168,21 +168,47 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public boolean DeleteBooks(int id) {
         boolean result = false;
-        String sql = "DELETE FROM book_dtls WHERE bookId = ?";
+        String deleteBookSql = "DELETE FROM book_dtls WHERE bookId = ?";
+        String deleteRecentBookSql = "DELETE FROM recent_books WHERE bookId = ?";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
+        try (PreparedStatement deleteBookStmt = conn.prepareStatement(deleteBookSql);
+             PreparedStatement deleteRecentBookStmt = conn.prepareStatement(deleteRecentBookSql)) {
 
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
+            conn.setAutoCommit(false);  // Start transaction
+
+            // Delete from book_dtls
+            deleteBookStmt.setInt(1, id);
+            int rowsAffectedBook = deleteBookStmt.executeUpdate();
+
+            // Delete from recent_books
+            deleteRecentBookStmt.setInt(1, id);
+            int rowsAffectedRecentBook = deleteRecentBookStmt.executeUpdate();
+
+            if (rowsAffectedBook > 0 && rowsAffectedRecentBook > 0) {
+                conn.commit();  // Commit transaction if either deletion is successful
                 result = true;
+            } else {
+                conn.rollback();  // Rollback transaction if no rows are affected
             }
+
         } catch (SQLException e) {
+            try {
+                conn.rollback();  // Rollback transaction in case of error
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
             e.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true);  // Reset auto-commit mode
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return result;
     }
+
     
     public List<BookDtls> getNewBook() {
         List<BookDtls> list = new ArrayList<BookDtls>();
@@ -341,7 +367,81 @@ public class BookDAOImpl implements BookDAO {
 	    return list;
 	}
 
+	
+	
+
+	@Override
+	public List<BookDtls> getBookByOld(String email, String status) {
+	    List<BookDtls> list = new ArrayList<>();
+	    BookDtls b = null;
+	    
+	    String sql = "SELECT * FROM book_dtls WHERE email = ? AND status = ?";
+	    
+	    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+	        ps.setString(1, email);
+	        ps.setString(2, status);
+
+	        try (ResultSet rs = ps.executeQuery()) {
+	        	 while (rs.next()) {
+	                 b = new BookDtls();
+	                 b.setBookId(rs.getInt("bookId"));
+	                 b.setBookName(rs.getString("bookname"));
+	                 b.setAuthor(rs.getString("author"));
+	                 b.setPrice(rs.getString("price"));
+	                 b.setBookCategory(rs.getString("bookCategory"));
+	                 b.setStatus(rs.getString("status"));
+	                 b.setPhotoName(rs.getString("photo"));
+	                 b.setEmail(rs.getString("email"));
+	                 list.add(b);
+	             }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Log exception details
+	    }
+
+	    return list;
+	}
+
+	@Override
+	public boolean oldBookDelete(String email, String status, int id) {
+	    boolean f = false;
+	    PreparedStatement ps = null;
+	    PreparedStatement p = null;
+	    
+	    try {
+	        // SQL query for deleting from book_dtls
+	        String sql = "DELETE FROM book_dtls WHERE email = ? AND status = ? AND bookId = ?";
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, email);
+	        ps.setString(2, status);
+	        ps.setInt(3, id);
+	        int rowsAffected = ps.executeUpdate();
+
+	        // SQL query for deleting from recent_books
+	        String s = "DELETE FROM recent_books WHERE email = ? AND status = ? AND bookId = ?";
+	        p = conn.prepareStatement(s);
+	        p.setString(1, email);
+	        p.setString(2, status);
+	        p.setInt(3, id);
+	        int row = p.executeUpdate();
+
+	        // Check if both deletions were successful
+	        if (rowsAffected > 0 && row > 0) {
+	            f = true;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        // Close resources
+	        try {
+	            if (ps != null) ps.close();
+	            if (p != null) p.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return f;
+	}
 
 
-    
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>User Dashboard</title>
-<%@ include file="All_Component/AllCSS.jsp"%>
+<%@include file="All_Component/AllCSS.jsp"%>
 <style type="text/css">
 body {
 	background-color: #f7f7f7;
@@ -106,89 +106,91 @@ a:hover, a:active, a:focus, a:visited {
 	color: #17a2b8; /* Light blue for Help Center icon */
 }
 </style>
+
 </head>
 <body>
+<c:if test="${empty userobj }">
+<c:redirect url="login.jsp"></c:redirect>
+</c:if>
+<%@include file="All_Component/Navbar.jsp"%>
 
+<div class="container">
+<c:if test="${not empty userobj }">
+<h3 class="text-center">Hello, ${userobj.name }</h3>
+</c:if>
+    
+    <div class="row p-5">
+        <div class="col-md-4">
+            <a href="sell_books.jsp">
+                <div class="card card-sell-old-book">
+                    <div class="card-body text-center">
+                        <div class="text-dark">
+                            <i class="fas fa-book-open fa-3x"></i>
+                        </div>
+                        <h3>Sell Old Book</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        
+        <div class="col-md-4">
+            <a href="oldbook_Table.jsp">
+                <div class="card card-sell-old-book">
+                    <div class="card-body text-center">
+                        <div class="text-primary">
+                            <i class="fas fa-book-open fa-3x"></i>
+                        </div>
+                        <h3>Old Book</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="col-md-4">
+            <a href="editprofile.jsp">
+                <div class="card card-login-security">
+                    <div class="card-body text-center">
+                        <div class="text-success">
+                            <i class="fas fa-edit fa-3x"></i>
+                        </div>
+                        <h3>Edit Profile</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        
+        
+        <div class="col-md-6 mt-3">
+            <a href="yourOrders">
+                <div class="card card-my-order">
+                    <div class="card-body text-center">
+                        <div class="text-danger">
+                            <i class="fas fa-box-open fa-3x"></i>
+                        </div>
+                        <h3>My Order</h3>
+                        <p>Track Your Order</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="col-md-6 mt-3">
+            <a href="helpline.jsp">
+                <div class="card card-help-center">
+                    <div class="card-body text-center">
+                        <div class="text-info">
+                            <i class="fas fa-user-circle fa-3x"></i>
+                        </div>
+                        <h3>Help Center</h3>
+                        <p>24*7 Service</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 
-	<c:if test="${empty userobj }">
-		<c:redirect url="login.jsp"></c:redirect>
-	</c:if>
-	<%@include file="All_Component/Navbar.jsp"%>
-
-	<div class="container">
-		<c:if test="${not empty userobj }">
-			<h3 class="text-center">Hello, ${userobj.name}</h3>
-		</c:if>
-		<div class="row p-5">
-			<div class="col-md-6">
-				<a href="sell_books.jsp">
-					<div class="card card-sell-old-book">
-						<div class="card-body text-center">
-							<div class="text-dark">
-								<i class="fas fa-book-open fa-3x"></i>
-							</div>
-							<h3>Sell Old Book</h3>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-md-6">
-				<a href="editprofile.jsp">
-					<div class="card card-login-security">
-						<div class="card-body text-center">
-							<div class="text-success">
-								<i class="fas fa-edit fa-3x"></i>
-							</div>
-							<h3>Login & Security (Edit Profile)</h3>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-md-4 mt-3">
-				<a href="user_address.jsp">
-					<div class="card card-your-address">
-						<div class="card-body text-center">
-							<div class="text-warning">
-								<i class="fas fa-map-marker-alt fa-3x"></i>
-							</div>
-							<h3>Your Address</h3>
-							<p>Edit Address</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-md-4 mt-3">
-				<a href="order.jsp">
-					<div class="card card-my-order">
-						<div class="card-body text-center">
-							<div class="text-danger">
-								<i class="fas fa-box-open fa-3x"></i>
-							</div>
-							<h3>My Order</h3>
-							<p>Track Your Order</p>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col-md-4 mt-3">
-				<a href="helpline.jsp">
-					<div class="card card-help-center">
-						<div class="card-body text-center">
-							<div class="text-info">
-								<i class="fas fa-user-circle fa-3x"></i>
-							</div>
-							<h3>Help Center</h3>
-							<p>24*7 Service</p>
-						</div>
-					</div>
-				</a>
-			</div>
-		</div>
-	</div>
-	<%@ include file="All_Component/footer.jsp"%>
 </body>
 </html>
