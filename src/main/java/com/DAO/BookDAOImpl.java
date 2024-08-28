@@ -442,6 +442,40 @@ public class BookDAOImpl implements BookDAO {
 	    }
 	    return f;
 	}
+	
+	public List<BookDtls> searchBooks(String query) {
+	    List<BookDtls> books = new ArrayList<>();
+	    String sql = "SELECT * FROM book_dtls WHERE bookname LIKE ? OR author LIKE ? OR bookCategory LIKE ? ";
+	    
+	    try (
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        
+	        stmt.setString(1, "%" + query + "%");
+	        stmt.setString(2, "%" + query + "%");
+	        stmt.setString(3, "%" + query + "%");
+	        
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            BookDtls b = new BookDtls();
+	            b = new BookDtls();
+                b.setBookId(rs.getInt("bookId"));
+                b.setBookName(rs.getString("bookname"));
+                b.setAuthor(rs.getString("author"));
+                b.setPrice(rs.getString("price"));
+                b.setBookCategory(rs.getString("bookCategory"));
+                b.setStatus(rs.getString("status"));
+                b.setPhotoName(rs.getString("photo"));
+                b.setEmail(rs.getString("email"));
+                b.setCopies(rs.getInt("copies"));
+                books.add(b);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return books;
+	}
+
 
 
 }

@@ -3,6 +3,7 @@ package com.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,24 +18,6 @@ public class BookOrderDAOImpl implements BookOrderDAO {
         this.conn = connection;  // Corrected to use the parameter passed in the constructor
     }
 
-    @Override
-    public int getOrderNo() {
-        int i = 1;
-        try {
-            if (conn != null) {  // Null check for the connection object
-                String sql = "select * from book_order";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    // Intentionally empty - no operation needed as per your original code
-                }
-                i++;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return i;
-    }
 
     @Override
     public boolean saveOrder(List<Book_order> b) {
@@ -127,6 +110,22 @@ public class BookOrderDAOImpl implements BookOrderDAO {
         }
 
         return list;
+    }
+    
+    public boolean isOrderIdExists(String orderId) {
+        boolean exists = false;
+        try {
+            String query = "SELECT 1 FROM book_order WHERE order_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, orderId);
+            ResultSet rs = pstmt.executeQuery();
+            exists = rs.next();
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exists;
     }
 
 }

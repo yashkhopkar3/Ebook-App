@@ -3,6 +3,8 @@ package com.user.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -77,20 +79,26 @@ public class OrderServlet extends HttpServlet {
             List<Cart> blist = cartDao.getCartItems(id);
 
             if (blist == null || blist.isEmpty()) {
+            	session.setAttribute("failedMsg", "Please Add Items ");
                 resp.sendRedirect("cart.jsp");
                 return;
             }
 
             BookOrderDAOImpl orderDao = new BookOrderDAOImpl(DBConnect.getConn());
-            int i = orderDao.getOrderNo();
-
+            Book_order o = null;
             ArrayList<Book_order> orderList = new ArrayList<>();
+            Random r = new Random();
 
             for (Cart c : blist) {
                 if (c != null) {
-                    Book_order o = new Book_order();
-                    i++;
-                    o.setOrderId("BOOK-ORD-00" + i);
+                    // Generate a unique alphanumeric order ID
+                    String orderId;
+                    do {
+                        orderId = "BOOK-ORD-" + generateAlphanumericOrderId();
+                    } while (orderDao.isOrderIdExists(orderId)); // Method to check if Order ID exists in the database
+
+                    o = new Book_order();
+                    o.setOrderId(orderId);
                     o.setUserName(name);
                     o.setEmail(email);
                     o.setPhno(phno);
@@ -125,5 +133,16 @@ public class OrderServlet extends HttpServlet {
             e.printStackTrace();
             resp.sendRedirect("cart.jsp");
         }
+    }
+
+    // Method to generate a random alphanumeric string of 6 characters
+    private String generateAlphanumericOrderId() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder orderId = new StringBuilder();
+        Random r = new Random();
+        for (int i = 0; i < 6; i++) {
+            orderId.append(chars.charAt(r.nextInt(chars.length())));
+        }
+        return orderId.toString();
     }
 }

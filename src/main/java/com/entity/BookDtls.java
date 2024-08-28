@@ -68,8 +68,8 @@ public class BookDtls {
 	}
 
 
-	public void setPrice(String price) {
-		this.price = price;
+	public void setPrice(String d) {
+		this.price = d;
 	}
 
 

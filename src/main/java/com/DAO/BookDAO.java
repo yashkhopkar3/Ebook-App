@@ -16,5 +16,6 @@ public interface BookDAO {
     public List<BookDtls> getRecentBooks();
     public List<BookDtls> getBookByOld(String email, String status);
     public boolean oldBookDelete(String email, String status,int id);
+    public List<BookDtls> searchBooks(String query);
     
 }
