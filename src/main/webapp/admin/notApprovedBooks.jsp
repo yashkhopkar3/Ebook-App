@@ -10,11 +10,42 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>All Books</title>
+<title>Approve Books</title>
 <%@ include file="AllCSS.jsp"%>
 <!-- Include Bootstrap CSS for styling -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+.card {
+	transition: transform 0.3s, box-shadow 0.3s;
+	margin-bottom: 20px; /* Adjust space below each card */
+}
+
+.card:hover {
+	transform: scale(1.05);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-body a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.card-title {
+	margin-top: 10px;
+}
+
+.container {
+	max-width: 1200px; /* Adjust the maximum width as needed */
+}
+
+.table thead th {
+	background-color: #343a40;
+	color: #fff;
+}
+</style>
 </head>
 <body style="background-color: #f0f1f2;">
 	<%@ include file="Navbar.jsp"%>
@@ -22,15 +53,15 @@
 	<c:redirect url="../login.jsp" />
 	</c:if>
 	<div class="container mt-5">
-	<c:if test="${not empty SuccMsg}">
-		<h5 class="text-center text-success">${SuccMsg}</h5>
-		<c:remove var="SuccMsg" scope="session" />
-	</c:if>
+		<c:if test="${not empty SuccMsg}">
+			<h5 class="text-center text-success">${SuccMsg}</h5>
+			<c:remove var="SuccMsg" scope="session" />
+		</c:if>
 
-	<c:if test="${not empty FailMsg}">
-		<h5 class="text-center text-danger">${FailMsg}</h5>
-		<c:remove var="FailMsg" scope="session" />
-	</c:if>
+		<c:if test="${not empty FailMsg}">
+			<h5 class="text-center text-danger">${FailMsg}</h5>
+			<c:remove var="FailMsg" scope="session" />
+		</c:if>
 		<table class="table table-striped table-hover">
 			<thead class="thead-dark">
 				<tr>
@@ -48,7 +79,7 @@
 			<tbody>
 				<%
 				BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
-				List<BookDtls> list = dao.getALLBooks();
+				List<BookDtls> list = dao.getNotApprovedBooks(); // Method to fetch not approved books
 				for (BookDtls b : list) {
 				%>
 				<tr>
@@ -61,11 +92,12 @@
 					<td><%=b.getBookCategory()%></td>
 					<td><%=b.getCopies()%></td>
 					<td><%=b.getStatus()%></td>
-					<td><a href="edit_Books.jsp?id=<%=b.getBookId()%>"
+					<td><a href="approveBook.jsp?id=<%=b.getBookId()%>"
+						class="btn btn-sm btn-success"><i class="fa-solid fa-check"></i>&nbsp;Approve</a>
+						<a href="edit_Books.jsp?id=<%=b.getBookId()%>"
 						class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit</a> 
 						<a href="../delete?id=<%=b.getBookId()%>"
 						class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i>&nbsp;Delete</a></td>
-
 				</tr>
 				<%
 				}

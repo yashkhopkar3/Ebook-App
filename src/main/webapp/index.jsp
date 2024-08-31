@@ -349,43 +349,64 @@ if (recentBooks.size() > 2) {
 	<!--End of New Books-->
 
 	<!--Start of Old Books-->
-	<div class="container-fluid" id="old-books">
-		<br>
-		<h3 class="text-center mt-4">Old Books</h3>
-		<div class="row">
-			<%
-			// Fetch old books from database
-			BookDAOImpl dao1 = new BookDAOImpl(DBConnect.getConn());
-			List<BookDtls> oldBooks = dao1.getOldBooks();
-			for (BookDtls b : oldBooks) {
-			%>
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="<%=b.getBookName()%>"
-								src="Book/<%=b.getPhotoName() %>" class="img-thumbnail">
-							<p>
-								Book Name:
-								<%=b.getBookName()%></p>
-							<p>
-								Author:
-								<%=b.getAuthor()%></p>
-							<p class="price">
-								Price: <i class="fa-solid fa-indian-rupee-sign"></i>
-								<%=b.getPrice()%></p>
-							<a href="view_books.jsp?bid=<%=b.getBookId()%>"
-								class="btn btn-outline-primary btn-custom text-center">View
-								Details</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<%
-			}
-			%>
-		</div>
-	</div>
+	<!-- Start of Old Books -->
+<%
+List<BookDtls> oldBooks = dao.getOldBooks();
+if (!oldBooks.isEmpty()) {
+%>
+<div class="container-fluid" id="old-books">
+    <br>
+    <h3 class="text-center mt-4">Old Books</h3>
+    <div class="row">
+        <%
+        for (BookDtls b : oldBooks) {
+            boolean isAvailable = "available".equalsIgnoreCase(b.getStatus());
+        %>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card-container">
+                <div class="card fs-1-custom">
+                    <div class="card-body text-center">
+                        <img alt="<%=b.getBookName()%>" src="Book/<%=b.getPhotoName()%>" class="img-thumbnail">
+                        <p>Book Name: <%=b.getBookName()%></p>
+                        <p>Author: <%=b.getAuthor()%></p>
+                        <p class="price">Price: <i class="fa-solid fa-indian-rupee-sign"></i> <%=b.getPrice()%></p>
+                        <div class="row-buttons <%= isAvailable ? "" : "no-cart" %>">
+                            <%
+                            if (isAvailable) {
+                                if (u == null) {
+                            %>
+                            <a href="login.jsp" class="btn btn-primary btn-custom">
+                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                            </a>
+                            <%
+                                } else {
+                            %>
+                            <a href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>&addCart=true" class="btn btn-primary btn-custom">
+                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                            </a>
+                            <%
+                                }
+                            }
+                            %>
+                            &nbsp; 
+                            <a href="view_books.jsp?bid=<%=b.getBookId()%>" class="btn btn-outline-primary btn-custom <%= isAvailable ? "" : "no-cart" %>">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%
+        }
+        %>
+    </div>
+</div>
+<%
+}
+%>
+<!-- End of Old Books -->
+
 	<!--End of Old Books-->
 
 	<%@include file="All_Component/footer.jsp"%>

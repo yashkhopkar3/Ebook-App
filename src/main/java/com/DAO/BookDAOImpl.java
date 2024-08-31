@@ -62,7 +62,7 @@ public class BookDAOImpl implements BookDAO {
         BookDtls b;
 
         try {
-            String sql = "SELECT * FROM book_dtls";
+            String sql = "SELECT * FROM book_dtls where NOT status ='Not Approved'";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
@@ -169,34 +169,29 @@ public class BookDAOImpl implements BookDAO {
     public boolean DeleteBooks(int id) {
         boolean result = false;
         String deleteBookSql = "DELETE FROM book_dtls WHERE bookId = ?";
-        String deleteRecentBookSql = "DELETE FROM recent_books WHERE bookId = ?";
 
-        try (PreparedStatement deleteBookStmt = conn.prepareStatement(deleteBookSql);
-             PreparedStatement deleteRecentBookStmt = conn.prepareStatement(deleteRecentBookSql)) {
+        try {
+            conn.setAutoCommit(false); // Disable auto-commit mode
 
-            conn.setAutoCommit(false);  // Start transaction
+            try (PreparedStatement deleteBookStmt = conn.prepareStatement(deleteBookSql)) {
 
-            // Delete from book_dtls
-            deleteBookStmt.setInt(1, id);
-            int rowsAffectedBook = deleteBookStmt.executeUpdate();
+                // Delete from book_dtls
+                deleteBookStmt.setInt(1, id);
+                int rowsAffectedBook = deleteBookStmt.executeUpdate();
 
-            // Delete from recent_books
-            deleteRecentBookStmt.setInt(1, id);
-            int rowsAffectedRecentBook = deleteRecentBookStmt.executeUpdate();
+                if (rowsAffectedBook > 0) {
+                    conn.commit();  // Commit the transaction if deletion is successful
+                    result = true;
+                } else {
+                    conn.rollback();  // Rollback the transaction if no rows are affected
+                }
 
-            if (rowsAffectedBook > 0 && rowsAffectedRecentBook > 0) {
-                conn.commit();  // Commit transaction if either deletion is successful
-                result = true;
-            } else {
-                conn.rollback();  // Rollback transaction if no rows are affected
+            } catch (SQLException e) {
+                conn.rollback();  // Rollback the transaction in case of error
+                e.printStackTrace();
             }
 
         } catch (SQLException e) {
-            try {
-                conn.rollback();  // Rollback transaction in case of error
-            } catch (SQLException rollbackException) {
-                rollbackException.printStackTrace();
-            }
             e.printStackTrace();
         } finally {
             try {
@@ -208,6 +203,7 @@ public class BookDAOImpl implements BookDAO {
 
         return result;
     }
+
 
     
     public List<BookDtls> getNewBook() {
@@ -253,9 +249,6 @@ public class BookDAOImpl implements BookDAO {
         	String updateStatusSql = "UPDATE book_dtls SET status = 'Unavailable' WHERE copies = 0";
             PreparedStatement updatePs = conn.prepareStatement(updateStatusSql);
             updatePs.executeUpdate();
-            String updateStatusSql2 = "UPDATE book_dtls SET status = 'Available' WHERE CAST(copies AS UNSIGNED)> 0";
-            PreparedStatement upPs = conn.prepareStatement(updateStatusSql2);
-            upPs.executeUpdate();
             // SQL query to fetch the oldest books in each category
             String sql = "WITH unavailable_books AS ( SELECT bookId, bookname, author, price, bookCategory, status, photo, email FROM book_dtls WHERE status = 'Unavailable' ), ranked_books AS ( SELECT bookId, bookname, author, price, bookCategory, status, photo, email, ROW_NUMBER() OVER (PARTITION BY bookCategory ORDER BY bookId DESC) as rn FROM unavailable_books ) SELECT bookId, bookname, author, price, bookCategory, status, photo, email FROM ranked_books WHERE rn = 1 ORDER BY RAND() LIMIT 4;";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -331,9 +324,6 @@ public class BookDAOImpl implements BookDAO {
 	    	String updateStatusSql = "UPDATE recent_books SET status = 'Unavailable' WHERE copies = 0";
             PreparedStatement updatePs = conn.prepareStatement(updateStatusSql);
             updatePs.executeUpdate();
-            String updateStatusSql2 = "UPDATE recent_books SET status = 'Available' WHERE CAST(copies AS UNSIGNED)> 0";
-            PreparedStatement upPs = conn.prepareStatement(updateStatusSql2);
-            upPs.executeUpdate();
 	        // Check and manage the recent books limit
 	        String countQuery = "SELECT COUNT(*) FROM recent_books";
 	        PreparedStatement psCount = conn.prepareStatement(countQuery);
@@ -375,11 +365,10 @@ public class BookDAOImpl implements BookDAO {
 	    List<BookDtls> list = new ArrayList<>();
 	    BookDtls b = null;
 	    
-	    String sql = "SELECT * FROM book_dtls WHERE email = ? AND status = ?";
+	    String sql = "SELECT * FROM book_dtls WHERE email = ?";
 	    
 	    try (PreparedStatement ps = conn.prepareStatement(sql)) {
 	        ps.setString(1, email);
-	        ps.setString(2, status);
 
 	        try (ResultSet rs = ps.executeQuery()) {
 	        	 while (rs.next()) {
@@ -403,30 +392,28 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public boolean oldBookDelete(String email, String status, int id) {
+	public boolean oldBookDelete(String email, int id) {
 	    boolean f = false;
 	    PreparedStatement ps = null;
 	    PreparedStatement p = null;
 	    
 	    try {
 	        // SQL query for deleting from book_dtls
-	        String sql = "DELETE FROM book_dtls WHERE email = ? AND status = ? AND bookId = ?";
+	        String sql = "DELETE FROM book_dtls WHERE email = ? AND bookId = ?";
 	        ps = conn.prepareStatement(sql);
 	        ps.setString(1, email);
-	        ps.setString(2, status);
-	        ps.setInt(3, id);
+	        ps.setInt(2, id);
 	        int rowsAffected = ps.executeUpdate();
 
 	        // SQL query for deleting from recent_books
-	        String s = "DELETE FROM recent_books WHERE email = ? AND status = ? AND bookId = ?";
+	        String s = "DELETE FROM recent_books WHERE email = ?  AND bookId = ?";
 	        p = conn.prepareStatement(s);
 	        p.setString(1, email);
-	        p.setString(2, status);
-	        p.setInt(3, id);
+	        p.setInt(2, id);
 	        int row = p.executeUpdate();
 
 	        // Check if both deletions were successful
-	        if (rowsAffected > 0 && row > 0) {
+	        if (rowsAffected > 0) {
 	            f = true;
 	        }
 	    } catch (SQLException e) {
@@ -475,7 +462,48 @@ public class BookDAOImpl implements BookDAO {
 	    
 	    return books;
 	}
-
-
+	
+	public List<BookDtls> getNotApprovedBooks() {
+        List<BookDtls> list = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM book_dtls WHERE status = 'Not Approved'";
+            PreparedStatement pst = conn.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                BookDtls book = new BookDtls();
+                book.setBookId(rs.getInt("bookId"));
+                book.setBookName(rs.getString("bookname"));
+                book.setAuthor(rs.getString("author"));
+                book.setPrice(rs.getString("price"));
+                book.setBookCategory(rs.getString("bookCategory"));
+                book.setCopies(rs.getInt("copies"));
+                book.setStatus(rs.getString("status"));
+                book.setPhotoName(rs.getString("photo"));
+                list.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+	
+	public boolean updateBookStatus(int bookId, String status) {
+		boolean updated = false;
+		try {
+			String query = "UPDATE book_dtls SET status = ? WHERE bookId = ?";
+			PreparedStatement pst = conn.prepareStatement(query);
+			pst.setString(1, status);
+			pst.setInt(2, bookId);
+			
+			int result = pst.executeUpdate();
+			if (result > 0) {
+				updated = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return updated;
+	}
 
 }

@@ -47,9 +47,10 @@ public class BooksAdd extends HttpServlet {
 			
 			HttpSession session = req.getSession();
 			if (f) {
-				String path=getServletContext().getRealPath("")+"Book";
-				 File file =new File(path);
-				part.write(path+File.separator+uploadPhoto);
+		            String path = getServletContext().getRealPath("")+"Book";
+		            File file=new File(path);
+		            part.write(path+File.separator+uploadPhoto);
+		            System.out.println(path+File.separator+uploadPhoto);
                 session.setAttribute("SuccMsg", "Book Added Successfully");
                 resp.sendRedirect("admin/addBooks.jsp");
             } else {

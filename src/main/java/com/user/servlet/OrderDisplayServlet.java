@@ -30,13 +30,12 @@ public class OrderDisplayServlet extends HttpServlet {
         try {
             String email = loggedInUser.getEmail();
             BookOrderDAOImpl orderDao = new BookOrderDAOImpl(DBConnect.getConn());
-            List<Book_order> orders = orderDao.getOrdersByEmail(email);
-
+            List<Book_order> orders = orderDao.getOrdersAll();
             // Store the orders in session
             session.setAttribute("orders", orders);
 
             // Forward to the order display JSP page
-            req.getRequestDispatcher("order.jsp").forward(req, resp);
+            resp.sendRedirect("order.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();

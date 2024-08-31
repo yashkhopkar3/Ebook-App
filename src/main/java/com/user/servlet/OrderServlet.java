@@ -104,8 +104,9 @@ public class OrderServlet extends HttpServlet {
                     o.setPhno(phno);
                     o.setFulladd(fullAdd);
                     o.setBookName(c.getBookName());
+                    o.setBookId(c.getBid());
                     o.setAuthor(c.getAuthor());
-                    o.setPrice(c.getPrice() + "");
+                    o.setPrice(c.getPrice());
                     o.setPaymentType(paymentType);
                     o.setCopies(c.getCopies());
                     orderList.add(o);

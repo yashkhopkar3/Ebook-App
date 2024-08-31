@@ -150,6 +150,12 @@ body {
 								<input type="file" class="form-control" id="uploadPhoto"
 									name="uploadPhoto" required>
 							</div>
+							
+							<div class="mb-3">
+								<label for="copies" class="form-label">Number of Copies</label>
+								<input type="number" class="form-control" id="copies"
+									name="copies" required>
+							</div>
 
 							<!-- Submit Button -->
 							<div class="text-center">

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -67,7 +67,19 @@
 					</div>
 				</div>
 			</div>
-
+			
+			<!-- Not Approved Books Card -->
+			<div class="col-md-4 d-flex align-items-stretch mb-3">
+				<div class="card text-center w-100">
+					<div class="card-body">
+						<a href="notApprovedBooks.jsp"> <i
+							class="fas fa-book fa-3x text-danger"></i>
+							<h5 class="card-title">Not Approved Books</h5>
+						</a>
+					</div>
+				</div>
+			</div>
+			
 			<!-- Orders Card -->
 			<div class="col-md-4 d-flex align-items-stretch mb-3">
 				<div class="card text-center w-100">

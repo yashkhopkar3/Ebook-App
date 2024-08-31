@@ -24,7 +24,7 @@ public class DeleteOldBook extends HttpServlet {
 			String em= req.getParameter("email");
 			int id = Integer.parseInt(req.getParameter("id"));
 			BookDAOImpl dao = new BookDAOImpl(DBConnect.getConn());
-			boolean f= dao.oldBookDelete(em, "Unavailable",id);
+			boolean f= dao.oldBookDelete(em,id);
 			HttpSession session = req.getSession();
 			if (f) {
 			session.setAttribute("succMsg", "Old Book Delete Sucessfully"); resp.sendRedirect("oldbook_Table.jsp");

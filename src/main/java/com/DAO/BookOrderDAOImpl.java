@@ -15,35 +15,34 @@ public class BookOrderDAOImpl implements BookOrderDAO {
 
     public BookOrderDAOImpl(Connection connection) {
         super();
-        this.conn = connection;  // Corrected to use the parameter passed in the constructor
+        this.conn = connection;
     }
-
 
     @Override
     public boolean saveOrder(List<Book_order> b) {
         boolean f = false;
         try {
-            if (conn != null && b != null) {  // Null check for both connection and list
-                String sql = "insert into book_order(order_id, user_name, email, address, phone, book_name, author, price, payment, copies) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            if (conn != null && b != null) {
+                String sql = "INSERT INTO book_order(order_id, user_name, email, address, phone, book_id, book_name, author, price, payment, copies) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 conn.setAutoCommit(false);
                 PreparedStatement ps = conn.prepareStatement(sql);
 
                 for (Book_order blist : b) {
-                    if (blist != null) {  // Null check for each Book_order object in the list
+                    if (blist != null) {
                         ps.setString(1, blist.getOrderId());
                         ps.setString(2, blist.getUserName());
                         ps.setString(3, blist.getEmail());
                         ps.setString(4, blist.getFulladd());
                         ps.setString(5, blist.getPhno());
-                        ps.setString(6, blist.getBookName());
-                        ps.setString(7, blist.getAuthor());
-                        ps.setString(8, blist.getPrice());
-                        ps.setString(9, blist.getPaymentType());
-                        ps.setInt(10, blist.getCopies());
+                        ps.setInt(6, blist.getBookId());  // Set book_id
+                        ps.setString(7, blist.getBookName());
+                        ps.setString(8, blist.getAuthor());
+                        ps.setDouble(9, blist.getPrice());
+                        ps.setString(10, blist.getPaymentType());
+                        ps.setInt(11, blist.getCopies());
                         ps.addBatch();
                     }
                 }
-                //System.out.println("Inserting book order: " + b.toString());
 
                 int[] count = ps.executeBatch();
                 conn.commit();
@@ -51,11 +50,17 @@ public class BookOrderDAOImpl implements BookOrderDAO {
                 conn.setAutoCommit(true);
             }
         } catch (Exception e) {
+            try {
+                conn.rollback(); // Rollback in case of error
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
             e.printStackTrace();
         }
         return f;
     }
-    
+
+    @Override
     public List<Book_order> getOrdersByEmail(String email) {
         List<Book_order> list = new ArrayList<>();
         try {
@@ -67,9 +72,13 @@ public class BookOrderDAOImpl implements BookOrderDAO {
                 Book_order order = new Book_order();
                 order.setOrderId(rs.getString("order_id"));
                 order.setUserName(rs.getString("user_name"));
-                order.setAuthor(rs.getString("author"));
+                order.setEmail(rs.getString("email"));
+                order.setFulladd(rs.getString("address"));
+                order.setPhno(rs.getString("phone"));
+                order.setBookId(rs.getInt("book_id"));  // Set book_id
                 order.setBookName(rs.getString("book_name"));
-                order.setPrice(rs.getString("price"));
+                order.setAuthor(rs.getString("author"));
+                order.setPrice(rs.getDouble("price"));  // Use getDouble for price
                 order.setPaymentType(rs.getString("payment"));
                 order.setCopies(rs.getInt("copies"));
                 list.add(order);
@@ -80,28 +89,27 @@ public class BookOrderDAOImpl implements BookOrderDAO {
         return list;
     }
 
+    @Override
     public List<Book_order> getOrdersAll() {
         List<Book_order> list = new ArrayList<>();
-        Book_order order = null;
-
         try {
-            String query = "SELECT order_id, user_name, email, address, phone, book_name, author, price, payment, copies FROM book_order";
+            String query = "SELECT * FROM book_order";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                order = new Book_order();
+                Book_order order = new Book_order();
                 order.setOrderId(rs.getString("order_id"));
                 order.setUserName(rs.getString("user_name"));
                 order.setEmail(rs.getString("email"));
-                order.setFulladd(rs.getString("address")); // Set full address
-                order.setPhno(rs.getString("phone")); // Set phone number
+                order.setFulladd(rs.getString("address"));
+                order.setPhno(rs.getString("phone"));
+                order.setBookId(rs.getInt("book_id"));  // Set book_id
                 order.setBookName(rs.getString("book_name"));
                 order.setAuthor(rs.getString("author"));
-                order.setPrice(rs.getString("price"));
+                order.setPrice(rs.getDouble("price"));  // Use getDouble for price
                 order.setPaymentType(rs.getString("payment"));
                 order.setCopies(rs.getInt("copies"));
-
                 list.add(order);
             }
 
@@ -111,7 +119,8 @@ public class BookOrderDAOImpl implements BookOrderDAO {
 
         return list;
     }
-    
+
+    @Override
     public boolean isOrderIdExists(String orderId) {
         boolean exists = false;
         try {

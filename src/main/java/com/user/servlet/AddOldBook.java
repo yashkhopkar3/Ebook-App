@@ -26,8 +26,16 @@ public class AddOldBook extends HttpServlet {
             String authorName = req.getParameter("authorName");
             String price = req.getParameter("price");
             String bookCategories = req.getParameter("bookCategories");
-            String bookStatus = "Unavailable";
-            int copies = 0;
+            String bookStatus = "Not Approved";
+            int copies = Integer.parseInt(req.getParameter("copies"));
+
+            // Check if copies are less than or equal to zero
+            if (copies <= 0) {
+                HttpSession session = req.getSession();
+                session.setAttribute("FailMsg", "The number of copies must be greater than zero.");
+                resp.sendRedirect("sell_books.jsp");
+                return;
+            }
 
             Part part = req.getPart("uploadPhoto");
             String uploadPhoto = part.getSubmittedFileName();
@@ -43,10 +51,12 @@ public class AddOldBook extends HttpServlet {
             // Handle the result
             HttpSession session = req.getSession();
             if (isAdded) {
-            	String path=getServletContext().getRealPath("")+"Book";
-				 File file =new File(path);
-				part.write(path+File.separator+uploadPhoto);
-                System.out.println(path+File.separator+uploadPhoto);
+                String path = getServletContext().getRealPath("") + "Book";
+                File file = new File(path);
+                if (!file.exists()) {
+                    file.mkdirs(); // Create directory if it doesn't exist
+                }
+                part.write(path + File.separator + uploadPhoto);
                 session.setAttribute("SuccMsg", "Book Added Successfully");
                 resp.sendRedirect("sell_books.jsp");
             } else {
@@ -60,7 +70,7 @@ public class AddOldBook extends HttpServlet {
             e.printStackTrace();
             HttpSession session = req.getSession();
             session.setAttribute("FailMsg", "An error occurred. Please try again.");
-            resp.sendRedirect("admin/addBooks.jsp");
+            resp.sendRedirect("sell_books.jsp");
         }
     }
 }
