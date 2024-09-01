@@ -49,6 +49,16 @@
     .text-center a:hover {
         color: #0056b3;
     }
+    .password-toggle {
+        position: relative;
+    }
+    .password-toggle .toggle-btn {
+        position: absolute;
+        top: 70%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
 </style>
 </head>
 <body style="background-color: #f0f1f2;">
@@ -83,15 +93,22 @@
 
                             <div class="mb-3">
                                 <label for="phoneNo" class="form-label">Phone No</label>
-                                <input type="number" class="form-control" id="phoneNo" name="phno" required>
+                                <input type="tel" class="form-control" id="phoneNo" name="phno" 
+                                       pattern="[0-9]{10}" title="Phone number should be 10 digits" required>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3 password-toggle">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="pass" required>
+                                <input type="password" class="form-control" id="password" name="pass" 
+                                       pattern="(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}" 
+                                       title="Password must be 8-16 characters long, with at least one uppercase letter, one number, and one special character" required>
+                                <span class="toggle-btn" onclick="togglePassword()">
+                                    <i class="fas fa-eye"></i>
+                                </span>
                             </div>
+
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check" required>
                                 <label class="form-check-label" for="exampleCheck1">Agree to terms & Conditions</label>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Submit</button>
@@ -110,5 +127,20 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function togglePassword() {
+        var passwordField = document.getElementById("password");
+        var toggleBtn = document.querySelector(".toggle-btn i");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleBtn.classList.remove("fa-eye");
+            toggleBtn.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            toggleBtn.classList.remove("fa-eye-slash");
+            toggleBtn.classList.add("fa-eye");
+        }
+    }
+</script>
 </body>
 </html>
