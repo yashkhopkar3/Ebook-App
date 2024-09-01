@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +17,7 @@ import com.DB.DBConnect;
 import com.entity.Cart;
 import com.entity.Book_order;
 import com.entity.User;
+import com.utils.EmailUtil;
 
 @WebServlet("/order")
 public class OrderServlet extends HttpServlet {
@@ -31,7 +31,7 @@ public class OrderServlet extends HttpServlet {
                 resp.sendRedirect("cart.jsp");
                 return;
             }
-            
+
             int id = Integer.parseInt(idParam);
 
             String name = req.getParameter("name");
@@ -71,7 +71,7 @@ public class OrderServlet extends HttpServlet {
                 resp.sendRedirect("cart.jsp");
                 return;
             }
-            
+
             session.setAttribute("userobj", user);
 
             // Proceed with the order placement
@@ -79,7 +79,7 @@ public class OrderServlet extends HttpServlet {
             List<Cart> blist = cartDao.getCartItems(id);
 
             if (blist == null || blist.isEmpty()) {
-            	session.setAttribute("failedMsg", "Please Add Items ");
+                session.setAttribute("failedMsg", "Please Add Items");
                 resp.sendRedirect("cart.jsp");
                 return;
             }
@@ -88,6 +88,18 @@ public class OrderServlet extends HttpServlet {
             Book_order o = null;
             ArrayList<Book_order> orderList = new ArrayList<>();
             Random r = new Random();
+
+            StringBuilder orderDetails = new StringBuilder();
+            
+            // Add large "BookMart" text in blue color
+            orderDetails.append("<div style='text-align: center; margin-bottom: 20px;'>");
+            orderDetails.append("<h1 style='color: blue; font-size: 48px;'>BookMart</h1>");
+            orderDetails.append("</div>");
+            
+            orderDetails.append("<h2>Thank you for your order!</h2>");
+            orderDetails.append("<p>Here are your order details:</p>");
+            orderDetails.append("<table border='1' style='width: 100%; border-collapse: collapse;'>");
+            orderDetails.append("<tr><th>Order ID</th><th>Book Name</th><th>Author</th><th>Price</th><th>Copies</th></tr>");
 
             for (Cart c : blist) {
                 if (c != null) {
@@ -110,8 +122,22 @@ public class OrderServlet extends HttpServlet {
                     o.setPaymentType(paymentType);
                     o.setCopies(c.getCopies());
                     orderList.add(o);
+
+                    // Append book details to order details
+                    orderDetails.append("<tr>");
+                    orderDetails.append("<td>").append(orderId).append("</td>");
+                    orderDetails.append("<td>").append(c.getBookName()).append("</td>");
+                    orderDetails.append("<td>").append(c.getAuthor()).append("</td>");
+                    orderDetails.append("<td>").append(c.getPrice()).append("</td>");
+                    orderDetails.append("<td>").append(c.getCopies()).append("</td>");
+                    orderDetails.append("</tr>");
                 }
             }
+
+            orderDetails.append("</table>");
+            orderDetails.append("<p><strong>Shipping Address:</strong> ").append(fullAdd).append("</p>");
+            orderDetails.append("<p><strong>Payment Method:</strong> ").append(paymentType).append("</p>");
+            orderDetails.append("<p>Thank you for shopping with us!</p>");
 
             if ("noselect".equals(paymentType)) {
                 session.setAttribute("failedMsg", "Choose Payment Method");
@@ -119,6 +145,9 @@ public class OrderServlet extends HttpServlet {
             } else {
                 boolean f = orderDao.saveOrder(orderList);
                 if (f) {
+                    // Send order confirmation email
+                    EmailUtil.sendEmail(user.getEmail(), "Order Confirmation", orderDetails.toString());
+
                     System.out.println("Order Success");
                     resp.sendRedirect("order_success.jsp"); // Redirect to a success page
                 } else {
