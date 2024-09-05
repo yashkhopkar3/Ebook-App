@@ -33,7 +33,6 @@ public class OrderServlet extends HttpServlet {
             }
 
             int id = Integer.parseInt(idParam);
-
             String name = req.getParameter("name");
             String email = req.getParameter("email");
             String phno = req.getParameter("mobile");
@@ -43,6 +42,21 @@ public class OrderServlet extends HttpServlet {
             String state = req.getParameter("state");
             String pincode = req.getParameter("pincode");
             String paymentType = req.getParameter("paymentType");
+            String totalPriceStr = req.getParameter("totalPrice");
+
+            // Retrieve offer and discounted price
+            String selectedOffer = req.getParameter("selectedOffer");
+            String discountedPriceStr = req.getParameter("discountedPrice");
+
+            double discountedPrice = 0;
+            if (discountedPriceStr != null && !discountedPriceStr.isEmpty()) {
+                discountedPrice = Double.parseDouble(discountedPriceStr);
+            }
+
+            double totalPrice = 0;
+            if (totalPriceStr != null && !totalPriceStr.isEmpty()) {
+                totalPrice = Double.parseDouble(totalPriceStr);
+            }
 
             if (name == null || email == null || phno == null || address == null || city == null || state == null || pincode == null || paymentType == null || paymentType.equals("noselect")) {
                 session.setAttribute("failedMsg", "Choose Payment Method");
@@ -90,16 +104,31 @@ public class OrderServlet extends HttpServlet {
             Random r = new Random();
 
             StringBuilder orderDetails = new StringBuilder();
-            
-            // Add large "BookMart" text in blue color
+
+            // Add professional HTML email template
+            orderDetails.append("<html>");
+            orderDetails.append("<head><style>");
+            orderDetails.append("body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; }");
+            orderDetails.append("h1 { color: #007BFF; }");
+            orderDetails.append("table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }");
+            orderDetails.append("th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }");
+            orderDetails.append("thead { background-color: #007BFF; color: #fff; }");
+            orderDetails.append("th { background-color: #0056b3; }");
+            orderDetails.append("p { margin: 0; padding: 10px 0; }");
+            orderDetails.append("</style></head>");
+            orderDetails.append("<body>");
             orderDetails.append("<div style='text-align: center; margin-bottom: 20px;'>");
-            orderDetails.append("<h1 style='color: blue; font-size: 48px;'>BookMart</h1>");
+            orderDetails.append("<h1>BookMart</h1>");
             orderDetails.append("</div>");
-            
+
             orderDetails.append("<h2>Thank you for your order!</h2>");
             orderDetails.append("<p>Here are your order details:</p>");
-            orderDetails.append("<table border='1' style='width: 100%; border-collapse: collapse;'>");
-            orderDetails.append("<tr><th>Order ID</th><th>Book Name</th><th>Author</th><th>Price</th><th>Copies</th></tr>");
+            orderDetails.append("<table>");
+            orderDetails.append("<thead><tr><th>Order ID</th><th>Book Name</th><th>Author</th><th>Price (&#8377;)</th><th>Copies</th></tr></thead>");
+            orderDetails.append("<tbody>");
+
+            double totalAmount = 0;
+            boolean isOfferApplied = (selectedOffer != null && !selectedOffer.isEmpty());
 
             for (Cart c : blist) {
                 if (c != null) {
@@ -128,16 +157,30 @@ public class OrderServlet extends HttpServlet {
                     orderDetails.append("<td>").append(orderId).append("</td>");
                     orderDetails.append("<td>").append(c.getBookName()).append("</td>");
                     orderDetails.append("<td>").append(c.getAuthor()).append("</td>");
-                    orderDetails.append("<td>").append(c.getPrice()).append("</td>");
+                    orderDetails.append("<td>").append(String.format("&#8377;%.2f", c.getPrice())).append("</td>");
                     orderDetails.append("<td>").append(c.getCopies()).append("</td>");
                     orderDetails.append("</tr>");
+
+                    double itemTotal = c.getPrice() * c.getCopies();
+                    totalAmount += itemTotal;
                 }
             }
 
+            if (isOfferApplied) {
+                orderDetails.append("<tfoot>");
+                orderDetails.append("<tr><td colspan='4'><strong>Selected Offer:</strong> ").append(selectedOffer).append("</td><td><strong>Discounted Price (&#8377;):</strong> ").append(String.format("&#8377;%.2f", discountedPrice)).append("</td></tr>");
+                orderDetails.append("</tfoot>");
+            } else {
+                orderDetails.append("<tfoot><tr><td colspan='5'><strong>No Offer Applied</strong></td></tr></tfoot>");
+            }
+
+            orderDetails.append("<tfoot><tr><td colspan='4'><strong>Total Amount (&#8377;):</strong></td><td>").append(String.format("&#8377;%.2f", totalAmount)).append("</td></tr></tfoot>");
+            orderDetails.append("</tbody>");
             orderDetails.append("</table>");
             orderDetails.append("<p><strong>Shipping Address:</strong> ").append(fullAdd).append("</p>");
             orderDetails.append("<p><strong>Payment Method:</strong> ").append(paymentType).append("</p>");
             orderDetails.append("<p>Thank you for shopping with us!</p>");
+            orderDetails.append("</body></html>");
 
             if ("noselect".equals(paymentType)) {
                 session.setAttribute("failedMsg", "Choose Payment Method");
@@ -165,13 +208,12 @@ public class OrderServlet extends HttpServlet {
         }
     }
 
-    // Method to generate a random alphanumeric string of 6 characters
     private String generateAlphanumericOrderId() {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder orderId = new StringBuilder();
-        Random r = new Random();
-        for (int i = 0; i < 6; i++) {
-            orderId.append(chars.charAt(r.nextInt(chars.length())));
+        Random rand = new Random();
+        for (int i = 0; i < 10; i++) {
+            orderId.append(chars.charAt(rand.nextInt(chars.length())));
         }
         return orderId.toString();
     }

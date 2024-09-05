@@ -141,7 +141,7 @@ to {
 	Connection con = null;
 	PreparedStatement pst = null;
 	ResultSet rs = null;
-	String query = "SELECT * FROM book_dtls WHERE bookCategory = ?";
+	String query = "SELECT * FROM book_dtls WHERE bookCategory = ? and not status=?";
 
 	try {
 		// Load JDBC driver and establish connection
@@ -156,6 +156,7 @@ to {
 			// Fetch all books in the category
 			pst = con.prepareStatement(query);
 			pst.setString(1, category);
+			pst.setString(2,"Not Approved");
 			rs = pst.executeQuery();
 
 			List<Map<String, Object>> books = new ArrayList<>();

@@ -133,7 +133,7 @@ if (ua != null) {
 						New Arrivals</a></li>
 				<li class="nav-item"><a class="nav-link" href="categories.jsp"><i
 						class="fa-solid fa-list"></i> Categories</a></li>
-				<li class="nav-item"><a class="nav-link" href="Offer.jsp"><i
+				<li class="nav-item"><a class="nav-link" href="offers"><i
 						class="fa-solid fa-envelope"></i> Offers</a></li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
