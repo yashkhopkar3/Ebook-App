@@ -90,6 +90,28 @@
 					</div>
 				</div>
 			</div>
+			
+			<!-- Add Offer Card -->
+			<div class="col-md-4 d-flex align-items-stretch mb-3">
+				<div class="card text-center w-100">
+					<div class="card-body">
+						<a href="addOffer.jsp"> <i class="fas fa-tags fa-3x text-success"></i>
+							<h5 class="card-title">Add Offer</h5>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Manage Offers Card -->
+			<div class="col-md-4 d-flex align-items-stretch mb-3">
+				<div class="card text-center w-100">
+					<div class="card-body">
+						<a href="manageOffers.jsp"> <i class="fas fa-cog fa-3x text-info"></i>
+							<h5 class="card-title">Manage Offers</h5>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 

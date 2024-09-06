@@ -204,8 +204,9 @@
 							<option value="<%=offer.getOfferId()%>"
 								data-discount="<%=offer.getDiscountPercentage()%>">
 								<%=offer.getOfferTitle()%> -
-								<%=offer.getDiscountPercentage()%>%
+								<%=offer.getDiscountPercentage()%>
 							</option>
+
 							<%
 							}
 							} else {
@@ -217,16 +218,16 @@
 						</select>
 						<!-- Hidden fields to store offer ID and discounted price -->
 						<input type="hidden" id="selectedOffer" name="selectedOffer"
-							value=""> <input type="hidden"
-							class="form-control" id="totalPrice" name="totalPrice"
-							value="<%=grandTotal%>" readonly>
+							value=""> <input type="hidden" class="form-control"
+							id="totalPrice" name="totalPrice" value="<%=grandTotal%>"
+							readonly>
 					</div>
 
 					<!-- Total Price -->
 					<div class="form-group">
-						<label for="totalPrice">Discounted Total Price</label> <input type="text"
-							class="form-control" id="discountedPrice" name="discountedPrice"
-							value="<%=grandTotal%>" readonly>
+						<label for="totalPrice">Discounted Total Price</label> <input
+							type="text" class="form-control" id="discountedPrice"
+							name="discountedPrice" value="<%=grandTotal%>" readonly>
 					</div>
 
 					<div class="form-group">
@@ -254,7 +255,9 @@
 			var discountedTotalPrice = originalTotalPrice
 					* (1 - (discount / 100));
 			document.getElementById('selectedOffer').value = select.value;
-	        document.getElementById('discountedPrice').value = discountedTotalPrice.toFixed(2);;
+			document.getElementById('discountedPrice').value = discountedTotalPrice
+					.toFixed(2);
+			;
 			// You may need to add further logic to update the server-side cart with the selected offer
 		}
 	</script>
