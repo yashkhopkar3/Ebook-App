@@ -21,7 +21,7 @@ public class BookDAOImpl implements BookDAO {
     public boolean addBooks(BookDtls b) {
         boolean result = false;
         String checkSql = "SELECT COUNT(*) FROM book_dtls WHERE bookname = ?";
-        String insertSql = "INSERT INTO book_dtls (bookname, author, price, bookCategory, status, photo, email, copies) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO book_dtls (bookname, author, price, bookCategory, status, photo, email, copies,admin_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
 
         try (PreparedStatement checkPs = conn.prepareStatement(checkSql)) {
             checkPs.setString(1, b.getBookName());
@@ -42,6 +42,7 @@ public class BookDAOImpl implements BookDAO {
                 insertPs.setString(6, b.getPhotoName());
                 insertPs.setString(7, b.getEmail());
                 insertPs.setInt(8, b.getCopies()); // Adding copies
+                insertPs.setInt(9, 1);
 
                 int rowsAffected = insertPs.executeUpdate();
                 if (rowsAffected > 0) {

@@ -4,9 +4,6 @@
 <%@ page import="com.DB.DBConnect"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.DAO.CartDAOImpl"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +15,31 @@
 <style>
 .btn-custom {
 	margin-right: 10px;
+}
+
+#loadingOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	display: none; /* Hidden by default */
+}
+
+.spinner-border {
+	width: 3rem;
+	height: 3rem;
+}
+
+.overlay-text {
+	color: white;
+	margin-top: 10px;
+	font-size: 1.2rem;
 }
 
 #toast {
@@ -129,8 +151,13 @@
 			</div>
 			<div class="col-md-5 card-container margin-bottom">
 				<h3>Shipping Details</h3>
-				<form action="order" method="post">
+				<form id="orderForm" action="order" method="post">
 					<input type="hidden" value="${userobj.id}" name="id">
+					
+					<!-- Hidden fields to store offer ID and discounted price -->
+					<input type="hidden" id="selectedOffer" name="selectedOffer" value="">
+					<input type="hidden" class="form-control" id="totalPrice" name="totalPrice" value="<%=grandTotal%>" readonly>
+					
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="name">Name</label> <input type="text"
@@ -187,6 +214,7 @@
 								required>
 						</div>
 					</div>
+					
 					<!-- Add Offer Selection Dropdown -->
 					<div class="form-group">
 						<label for="offer">Select Offer</label> <select
@@ -238,35 +266,51 @@
 							<option value="paypal">PayPal</option>
 						</select>
 					</div>
-					<button type="submit" class="btn btn-primary">Place Order</button>
+
+					<button id="placeOrderBtn" type="submit" class="btn btn-primary btn-custom">Place Order</button>
 				</form>
 			</div>
 		</div>
 	</div>
-	<%@include file="All_Component/footer.jsp"%>
-	<script>
-		function applyOffer() {
-			var select = document.getElementById('offer');
-			var discount = parseFloat(select.options[select.selectedIndex]
-					.getAttribute('data-discount')) || 0;
-			var originalTotalPrice =
-	<%=grandTotal%>
-		;
-			var discountedTotalPrice = originalTotalPrice
-					* (1 - (discount / 100));
-			document.getElementById('selectedOffer').value = select.value;
-			document.getElementById('discountedPrice').value = discountedTotalPrice
-					.toFixed(2);
-			;
-			// You may need to add further logic to update the server-side cart with the selected offer
-		}
-	</script>
+
+	<!-- Loading overlay -->
+	<div id="loadingOverlay">
+		<div class="text-center">
+			<div class="spinner-border" role="status"></div>
+			<div class="overlay-text">Processing your order...</div>
+		</div>
+	</div>
+
+	<!-- Toast Notification -->
+	<div id="toast" class="toast">Order placed successfully!</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script>
+		function applyOffer() {
+			// Handle offer application logic here
+			console.log("Offer selected.");
+		}
 
+		// Show spinner when form is submitted
+		document.getElementById("orderForm").onsubmit = function() {
+			document.getElementById("loadingOverlay").style.display = "flex";
+			document.getElementById("placeOrderBtn").disabled = true;
+		}
+
+		// Function to show toast notification
+		function showToast(message) {
+			var toast = document.getElementById("toast");
+			toast.innerHTML = message;
+			toast.classList.add("display");
+			setTimeout(function() {
+				toast.classList.remove("display");
+			}, 3000);
+		}
+
+		// Example: Show success toast after placing the order
+		// showToast("Order placed successfully!");
+	</script>
 </body>
 </html>

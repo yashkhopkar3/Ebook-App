@@ -16,5 +16,7 @@ public interface UserDAO {
 	
 	public boolean updateUserDetails(User user);
 	
+	public User adminLogin(String email, String password);
+	
 	
 }

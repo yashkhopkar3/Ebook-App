@@ -47,16 +47,19 @@
 }
 
 .carousel-inner img {
-	width: 100%;
-	height: 50vh; /* Adjust height as needed */
-	object-fit: cover;
+    width: 100%;
+    height: 50vh; /* Adjust the height based on your design */
+    object-fit: contain; /* Fills the width and height while cutting off parts of the image */
+    object-position: center; /* Centers the image focus */
 }
 
 .carousel-caption h2 {
-	background-color: rgba(0, 0, 0, 0.5);
-	padding: 0.5rem;
-	border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.2rem;
+    border-radius: 0.5rem;
 }
+
+
 
 /* Buttons */
 .btn-custom {
@@ -202,28 +205,31 @@ to {
 
 
 	 <!-- Carousel Slider -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000" data-wrap="true">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="2000" data-wrap="true">
         <ol class="carousel-indicators">
             <%
-                // Fetch offers from database
                 OffersDAOImpl offerDao = new OffersDAOImpl(DBConnect.getConn());
                 List<Offer> offers = offerDao.getAllOffers();
                 
-                // Create indicators
                 if (offers != null && !offers.isEmpty()) {
                     for (int i = 0; i < offers.size(); i++) {
             %>
-            <li data-target="#carouselExampleIndicators" data-slide-to="<%=i + 1%>"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="<%=i + 2%>"></li>
             <% 
                     } 
                 } 
             %>
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         </ol>
         <div class="carousel-inner">
             <!-- Static Slide -->
             <div class="carousel-item active">
-                <img class="d-block w-100" src="Book/Bookbg1.jpg" alt="Static slide">
+                <img class="d-block w-100" src="Book/Bookbg1.jpg" alt="Static slide"w>
+                <div class="carousel-caption d-none d-md-block"></div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="Book/Free Gifts.png" alt="Gift slide">
                 <div class="carousel-caption d-none d-md-block"></div>
             </div>
 
@@ -233,7 +239,7 @@ to {
                     for (Offer offer : offers) {
             %>
             <div class="carousel-item">
-                <a href="Offers.jsp">
+                <a href="offers">
                     <img class="d-block w-100" src="Book/<%=offer.getPhoto()%>" alt="Offer slide">
                 </a>
                 <div class="carousel-caption d-none d-md-block"></div>

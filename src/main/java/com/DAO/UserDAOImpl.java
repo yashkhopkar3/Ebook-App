@@ -156,4 +156,25 @@ public class UserDAOImpl implements UserDAO {
         }
         return isUpdated;
 	}
+
+	public User adminLogin(String email, String password) {
+		User user = null;
+        try {
+            String query = "SELECT * FROM admin WHERE email=? AND password=?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt("admin_id"));
+                user.setName(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));            
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+	}
 }

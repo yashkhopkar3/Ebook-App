@@ -25,25 +25,26 @@ public class LoginServlet extends HttpServlet {
             UserDAOImpl dao = new UserDAOImpl(conn);
             
             // Get the session
-            HttpSession session = req.getSession();		
+            HttpSession session = req.getSession();
             String email = req.getParameter("email");
             String password = req.getParameter("password");
-            
-            if ("admin@gmail.com".equals(email) && "admin".equals(password)) {
-                User us = new User(); 
-                us.setName("Admin");
-                session.setAttribute("userobj", us);
+
+            // Check if the user is an admin
+            User adminUser = dao.adminLogin(email, password);
+            if (adminUser != null) {
+                session.setAttribute("userobj", adminUser);
                 resp.sendRedirect("admin/home.jsp");
+                return;
+            }
+
+            // Attempt to login the regular user
+            User user = dao.login(email, password);
+            if (user != null) {
+                session.setAttribute("userobj", user);
+                resp.sendRedirect("index.jsp");
             } else {
-                // Attempt to login the user
-                User us = dao.login(email, password);
-                if (us != null) {
-                    session.setAttribute("userobj", us);
-                    resp.sendRedirect("index.jsp");
-                } else {
-                    session.setAttribute("failedMsg", "Email & Password Invalid");
-                    resp.sendRedirect("login.jsp");
-                }
+                session.setAttribute("failedMsg", "Email & Password Invalid");
+                resp.sendRedirect("login.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace();
