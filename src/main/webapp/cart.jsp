@@ -1,9 +1,13 @@
+<%@page import="com.entity.BookDtls"%>
+<%@page import="com.DAO.BookDAOImpl"%>
 <%@page import="com.entity.Offer"%>
 <%@page import="com.DAO.OffersDAOImpl"%>
 <%@ page import="com.entity.Cart"%>
 <%@ page import="com.DB.DBConnect"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.DAO.CartDAOImpl"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +19,8 @@
 <style>
 .btn-custom {
 	margin-right: 10px;
+	font-size: 0.5rem; /* Smaller font size */
+	padding: 1px 3px; /* Adjust padding for a smaller button */
 }
 
 #loadingOverlay {
@@ -63,10 +69,69 @@
 	padding: 15px;
 	border-radius: 5px;
 	background-color: #f9f9f9;
-	max-height: 590px; /* or any height that fits your design */
+	max-height: 500px; /* or any height that fits your design */
 	overflow-y: auto;
 }
+
+.related-books-container {
+	border: 1px solid #ddd;
+	padding: 1px;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	margin-top: 10px;
+}
+
+.book-card {
+	width: 18rem;
+	margin-bottom: 15px;
+}
+
+.view-all-btn {
+	display: none;
+	margin-top: 10px;
+	text-align: center; /* Center the button */
+}
+
+.fs-1-custom {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.card-body img {
+	width: 100%;
+	height: auto; /* Maintain aspect ratio */
+}
+
+.price {
+	font-size: 12px;
+	color: #28a745;
+}
+
+.card-container {
+	width: 100%;
+	max-width: 250px;
+	margin: 0 auto;
+	padding: 15px;
+}
+
+.book-action-buttons {
+	display: flex;
+	justify-content: center; /* Center the buttons horizontally */
+	margin-top: 10px; /* Add some space above the buttons */
+}
+
+.book-action-buttons .btn {
+	font-size: 0.75rem; /* Smaller font size */
+	padding: 3px 6px; /* Adjust padding for smaller buttons */
+	margin-right: 5px; /* Space between buttons */
+}
+
+.no-cart {
+	pointer-events: none; /* Disable clicking on buttons if no cart */
+	opacity: 0.5; /* Make buttons look disabled */
+}
 </style>
+
 </head>
 <body>
 
@@ -153,11 +218,12 @@
 				<h3>Shipping Details</h3>
 				<form id="orderForm" action="order" method="post">
 					<input type="hidden" value="${userobj.id}" name="id">
-					
+
 					<!-- Hidden fields to store offer ID and discounted price -->
-					<input type="hidden" id="selectedOffer" name="selectedOffer" value="">
-					<input type="hidden" class="form-control" id="totalPrice" name="totalPrice" value="<%=grandTotal%>" readonly>
-					
+					<input type="hidden" id="selectedOffer" name="selectedOffer"
+						value=""> <input type="hidden" class="form-control"
+						id="totalPrice" name="totalPrice" value="<%=grandTotal%>" readonly>
+
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="name">Name</label> <input type="text"
@@ -214,7 +280,7 @@
 								required>
 						</div>
 					</div>
-					
+
 					<!-- Add Offer Selection Dropdown -->
 					<div class="form-group">
 						<label for="offer">Select Offer</label> <select
@@ -267,7 +333,8 @@
 						</select>
 					</div>
 
-					<button id="placeOrderBtn" type="submit" class="btn btn-primary btn-custom">Place Order</button>
+					<button id="placeOrderBtn" type="submit"
+						class="btn btn-primary btn-custom">Place Order</button>
 				</form>
 			</div>
 		</div>
@@ -284,9 +351,148 @@
 	<!-- Toast Notification -->
 	<div id="toast" class="toast">Order placed successfully!</div>
 
+	<div class="container-fluid related-books-container" id="related-books">
+		<h3 class="text-center mt-4">Related Books & Suggestions You
+			Might Like</h3>
+		<div class="row">
+			<%
+			// Fetch related books for the user's cart
+			User user = (User) session.getAttribute("userobj");
+			List<BookDtls> relatedBooks = null;
+
+			if (user != null) {
+				BookDAOImpl bookDao = new BookDAOImpl(DBConnect.getConn());
+				relatedBooks = bookDao.getRelatedBooksByCategoryOrAuthorForCart(user.getId());
+			}
+
+			if (relatedBooks != null && !relatedBooks.isEmpty()) {
+				int count = 0; // To limit display to 4 books initially
+				for (BookDtls book : relatedBooks) {
+					boolean isAvailable = "available".equalsIgnoreCase(book.getStatus());
+					if (count < 4) {
+			%>
+			<div class="col-md-3 col-sm-6 mb-4">
+				<div class="card-container">
+					<div class="card fs-1-custom">
+						<div class="card-body text-center">
+							<img alt="<%=book.getBookName()%>"
+								src="Book/<%=book.getPhotoName()%>" class="img-thumbnail">
+							<p>
+								Book Name:
+								<%=book.getBookName()%></p>
+							<p>
+								Author:
+								<%=book.getAuthor()%></p>
+							<p class="price">
+								Price: <i class="fa-solid fa-indian-rupee-sign"></i><%=book.getPrice()%></p>
+							<div
+								class="book-action-buttons <%=isAvailable ? "" : "no-cart"%>"
+								style="display: flex; justify-content: center; margin-top: 10px;">
+								<%
+								if (isAvailable) {
+								%>
+								<a href="cart?bid=<%=book.getBookId()%>&&uid=<%=u.getId()%>&addCart=true"
+									class="btn btn-success"
+									style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">Add
+									to Cart</a>
+								<%
+								}
+								%>
+								<a href="view_books.jsp?bid=<%=book.getBookId()%>"
+									class="btn btn-outline-primary btn-custom <%=isAvailable ? "" : "no-cart"%>"
+									style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">View
+									Details</a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<%
+			count++;
+			} else { // Display remaining books but hidden initially
+			%>
+			<div class="col-md-3 col-sm-6 mb-4 extra-book" style="display: none;">
+				<div class="card-container">
+					<div class="card fs-1-custom">
+						<div class="card-body text-center">
+							<img alt="<%=book.getBookName()%>"
+								src="Book/<%=book.getPhotoName()%>" class="img-thumbnail">
+							<p>
+								Book Name:
+								<%=book.getBookName()%></p>
+							<p>
+								Author:
+								<%=book.getAuthor()%></p>
+							<p class="price">
+								Price: <i class="fa-solid fa-indian-rupee-sign"></i><%=book.getPrice()%></p>
+							<div
+								class="book-action-buttons <%=isAvailable ? "" : "no-cart"%>"
+								style="display: flex; justify-content: center; margin-top: 10px;">
+								<%
+								if (isAvailable) {
+								%>
+								<a href="cart?bid=<%=book.getBookId()%>&&uid=<%=u.getId()%>&addCart=true"
+									class="btn btn-success"
+									style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">Add
+									to Cart</a>
+								<%
+								}
+								%>
+								<a href="view_books.jsp?bid=<%=book.getBookId()%>"
+									class="btn btn-outline-primary btn-custom <%=isAvailable ? "" : "no-cart"%>"
+									style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">View
+									Details</a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<%
+			}
+			}
+			}
+			%>
+		</div>
+
+		<!-- 'View All' button to show more related books -->
+		<%
+		if (relatedBooks != null && relatedBooks.size() > 4) {
+		%>
+		<div class="text-center my-4">
+			<button class="btn btn-link" id="viewAllBtn" onclick="toggleView()">View
+				All</button>
+		</div>
+		<%
+		}
+		%>
+
+	</div>
+
+	<script>
+let isExpanded = false; // Track whether extra books are currently shown
+
+function toggleView() {
+    const extraBooks = document.querySelectorAll('.extra-book');
+    const button = document.getElementById('viewAllBtn');
+
+    // Show or hide the extra books based on the current state
+    extraBooks.forEach(book => {
+        book.style.display = isExpanded ? 'none' : 'block';
+    });
+
+    // Toggle button text and state
+    button.textContent = isExpanded ? 'View All' : 'View Less';
+    isExpanded = !isExpanded; // Flip the state
+}
+</script>
+
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script>
 		function applyOffer() {
 			// Handle offer application logic here

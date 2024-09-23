@@ -87,7 +87,7 @@
 				%>
 				<div class=" text-center p-3">
 				<% if(u!=null){ %>
-					<a href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>"
+					<a href="cart?bid=<%=b.getBookId()%>&&uid=<%=u.getId()%>&addCart=true"
 						class="btn btn-primary"><i class="fas fa-cart-plus"></i> Add
 						Cart</a> 
 				<%} else { %>	

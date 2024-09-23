@@ -506,5 +506,86 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return updated;
 	}
+	
+	
+	@Override
+	public List<BookDtls> getRelatedBooksByCategoryOrAuthorForCart(int userId) {
+	    List<BookDtls> list = new ArrayList<>();
+	    
+	    // Query to fetch categories and authors of books in the user's cart
+	    String cartSql = "SELECT DISTINCT b.bookCategory, b.author FROM cart c JOIN book_dtls b ON c.bid = b.bookId WHERE c.uid = ?";
+	    
+	    try (PreparedStatement cartPs = conn.prepareStatement(cartSql)) {
+	        cartPs.setInt(1, userId); // Get books in the cart for the specific user
+	        
+	        try (ResultSet cartRs = cartPs.executeQuery()) {
+	            // Process each book in the cart and fetch related books
+	            while (cartRs.next()) {
+	                String category = cartRs.getString("bookCategory");
+	                String author = cartRs.getString("author");
+
+	                // Query to fetch related books by category or author
+	                String relatedSql = "SELECT * FROM book_dtls WHERE (bookCategory = ? OR author = ?) AND status = 'Available' ORDER BY bookId DESC LIMIT 10";
+
+	                try (PreparedStatement relatedPs = conn.prepareStatement(relatedSql)) {
+	                    relatedPs.setString(1, category);
+	                    relatedPs.setString(2, author);
+
+	                    try (ResultSet relatedRs = relatedPs.executeQuery()) {
+	                        while (relatedRs.next()) {
+	                            BookDtls b = new BookDtls();
+	                            b.setBookId(relatedRs.getInt("bookId"));
+	                            b.setBookName(relatedRs.getString("bookname"));
+	                            b.setAuthor(relatedRs.getString("author"));
+	                            b.setPrice(relatedRs.getString("price"));
+	                            b.setBookCategory(relatedRs.getString("bookCategory"));
+	                            b.setStatus(relatedRs.getString("status"));
+	                            b.setPhotoName(relatedRs.getString("photo"));
+	                            b.setEmail(relatedRs.getString("email"));
+	                            b.setCopies(relatedRs.getInt("copies"));
+
+	                            list.add(b);
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    // If the list has fewer than 10 books, fetch additional new books
+	    if (list.size() < 10) {
+	        int remaining = 10 - list.size();
+	        String additionalSql = "SELECT * FROM book_dtls WHERE status = 'Available' ORDER BY bookId DESC LIMIT ?";
+
+	        try (PreparedStatement ps = conn.prepareStatement(additionalSql)) {
+	            ps.setInt(1, remaining); // Fetch the remaining books to reach 10
+
+	            try (ResultSet rs = ps.executeQuery()) {
+	                while (rs.next()) {
+	                    BookDtls b = new BookDtls();
+	                    b.setBookId(rs.getInt("bookId"));
+	                    b.setBookName(rs.getString("bookname"));
+	                    b.setAuthor(rs.getString("author"));
+	                    b.setPrice(rs.getString("price"));
+	                    b.setBookCategory(rs.getString("bookCategory"));
+	                    b.setStatus(rs.getString("status"));
+	                    b.setPhotoName(rs.getString("photo"));
+	                    b.setEmail(rs.getString("email"));
+	                    b.setCopies(rs.getInt("copies"));
+
+	                    list.add(b);
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return list;
+	}
+
+
 
 }

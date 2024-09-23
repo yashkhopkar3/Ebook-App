@@ -19,5 +19,6 @@ public interface BookDAO {
     public List<BookDtls> searchBooks(String query);
     public List<BookDtls> getNotApprovedBooks();
     public boolean updateBookStatus(int bookId, String status);
+    public List<BookDtls> getRelatedBooksByCategoryOrAuthorForCart(int userId);
     
 }
