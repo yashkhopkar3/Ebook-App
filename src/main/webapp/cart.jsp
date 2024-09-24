@@ -66,7 +66,7 @@
 /* Custom border, padding, and spacing for sections */
 .card-container {
 	border: 1px solid #ddd;
-	padding: 15px;
+	padding: 10px;
 	border-radius: 5px;
 	background-color: #f9f9f9;
 	max-height: 500px; /* or any height that fits your design */
@@ -99,7 +99,7 @@
 
 .card-body img {
 	width: 100%;
-	height: auto; /* Maintain aspect ratio */
+	height: auto ; /* Maintain aspect ratio */
 }
 
 .price {
@@ -352,141 +352,86 @@
 	<div id="toast" class="toast">Order placed successfully!</div>
 
 	<div class="container-fluid related-books-container" id="related-books">
-		<h3 class="text-center mt-4">Related Books & Suggestions You
-			Might Like</h3>
-		<div class="row">
-			<%
-			// Fetch related books for the user's cart
-			User user = (User) session.getAttribute("userobj");
-			List<BookDtls> relatedBooks = null;
+    <h3 class="text-center mt-4">Related Books & Suggestions You Might Like</h3>
+    
+    <div id="relatedBooksCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2500"> <!-- Added auto-slide attributes -->
+        <div class="carousel-inner">
+            <%
+            // Fetch related books for the user's cart
+            User user = (User) session.getAttribute("userobj");
+            List<BookDtls> relatedBooks = null;
 
-			if (user != null) {
-				BookDAOImpl bookDao = new BookDAOImpl(DBConnect.getConn());
-				relatedBooks = bookDao.getRelatedBooksByCategoryOrAuthorForCart(user.getId());
-			}
+            if (user != null) {
+                BookDAOImpl bookDao = new BookDAOImpl(DBConnect.getConn());
+                relatedBooks = bookDao.getRelatedBooksByCategoryOrAuthorForCart(user.getId());
+            }
 
-			if (relatedBooks != null && !relatedBooks.isEmpty()) {
-				int count = 0; // To limit display to 4 books initially
-				for (BookDtls book : relatedBooks) {
-					boolean isAvailable = "available".equalsIgnoreCase(book.getStatus());
-					if (count < 4) {
-			%>
-			<div class="col-md-3 col-sm-6 mb-4">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="<%=book.getBookName()%>"
-								src="Book/<%=book.getPhotoName()%>" class="img-thumbnail">
-							<p>
-								Book Name:
-								<%=book.getBookName()%></p>
-							<p>
-								Author:
-								<%=book.getAuthor()%></p>
-							<p class="price">
-								Price: <i class="fa-solid fa-indian-rupee-sign"></i><%=book.getPrice()%></p>
-							<div
-								class="book-action-buttons <%=isAvailable ? "" : "no-cart"%>"
-								style="display: flex; justify-content: center; margin-top: 10px;">
-								<%
-								if (isAvailable) {
-								%>
-								<a href="cart?bid=<%=book.getBookId()%>&&uid=<%=u.getId()%>&addCart=true"
-									class="btn btn-success"
-									style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">Add
-									to Cart</a>
-								<%
-								}
-								%>
-								<a href="view_books.jsp?bid=<%=book.getBookId()%>"
-									class="btn btn-outline-primary btn-custom <%=isAvailable ? "" : "no-cart"%>"
-									style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">View
-									Details</a>
-							</div>
+            if (relatedBooks != null && !relatedBooks.isEmpty()) {
+                int count = 0; // To control batches of 4
+                int batchSize = 4;
+                boolean isFirstSlide = true;
+                for (int i = 0; i < relatedBooks.size(); i += batchSize) {
+            %>
+            <div class="carousel-item <%= isFirstSlide ? "active" : "" %>">
+                <div class="row">
+                    <%
+                    for (int j = i; j < i + batchSize && j < relatedBooks.size(); j++) {
+                        BookDtls book = relatedBooks.get(j);
+                        boolean isAvailable = "available".equalsIgnoreCase(book.getStatus());
+                    %>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="card-container">
+                            <div class="card fs-1-custom">
+                                <div class="card-body text-center">
+                                    <img alt="<%=book.getBookName()%>"
+                                        src="Book/<%=book.getPhotoName()%>" class="img-thumbnail">
+                                    <p>Book Name: <%=book.getBookName()%></p>
+                                    <p>Author: <%=book.getAuthor()%></p>
+                                    <p class="price">Price: <i class="fa-solid fa-indian-rupee-sign"></i><%=book.getPrice()%></p>
+                                    <div class="book-action-buttons <%=isAvailable ? "" : "no-cart"%>"
+                                        style="display: flex; justify-content: center; margin-top: 10px;">
+                                        <%
+                                        if (isAvailable) {
+                                        %>
+                                        <a href="cart?bid=<%=book.getBookId()%>&&uid=<%=user.getId()%>&addCart=true"
+                                            class="btn btn-success"
+                                            style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">Add to Cart</a>
+                                        <%
+                                        }
+                                        %>
+                                        <a href="view_books.jsp?bid=<%=book.getBookId()%>"
+                                            class="btn btn-outline-primary btn-custom <%=isAvailable ? "" : "no-cart"%>"
+                                            style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                    }
+                    %>
+                </div>
+            </div>
+            <%
+                isFirstSlide = false; // Only the first slide is active
+                }
+            }
+            %>
+        </div>
+        
+        <!-- Carousel Controls -->
+        <a class="carousel-control-prev" href="#relatedBooksCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#relatedBooksCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </a>
+    </div>
+</div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-			<%
-			count++;
-			} else { // Display remaining books but hidden initially
-			%>
-			<div class="col-md-3 col-sm-6 mb-4 extra-book" style="display: none;">
-				<div class="card-container">
-					<div class="card fs-1-custom">
-						<div class="card-body text-center">
-							<img alt="<%=book.getBookName()%>"
-								src="Book/<%=book.getPhotoName()%>" class="img-thumbnail">
-							<p>
-								Book Name:
-								<%=book.getBookName()%></p>
-							<p>
-								Author:
-								<%=book.getAuthor()%></p>
-							<p class="price">
-								Price: <i class="fa-solid fa-indian-rupee-sign"></i><%=book.getPrice()%></p>
-							<div
-								class="book-action-buttons <%=isAvailable ? "" : "no-cart"%>"
-								style="display: flex; justify-content: center; margin-top: 10px;">
-								<%
-								if (isAvailable) {
-								%>
-								<a href="cart?bid=<%=book.getBookId()%>&&uid=<%=u.getId()%>&addCart=true"
-									class="btn btn-success"
-									style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">Add
-									to Cart</a>
-								<%
-								}
-								%>
-								<a href="view_books.jsp?bid=<%=book.getBookId()%>"
-									class="btn btn-outline-primary btn-custom <%=isAvailable ? "" : "no-cart"%>"
-									style="font-size: 0.95rem; padding: 3px 6px; margin-right: 5px;">View
-									Details</a>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<%
-			}
-			}
-			}
-			%>
-		</div>
-
-		<!-- 'View All' button to show more related books -->
-		<%
-		if (relatedBooks != null && relatedBooks.size() > 4) {
-		%>
-		<div class="text-center my-4">
-			<button class="btn btn-link" id="viewAllBtn" onclick="toggleView()">View
-				All</button>
-		</div>
-		<%
-		}
-		%>
-
-	</div>
-
-	<script>
-let isExpanded = false; // Track whether extra books are currently shown
-
-function toggleView() {
-    const extraBooks = document.querySelectorAll('.extra-book');
-    const button = document.getElementById('viewAllBtn');
-
-    // Show or hide the extra books based on the current state
-    extraBooks.forEach(book => {
-        book.style.display = isExpanded ? 'none' : 'block';
-    });
-
-    // Toggle button text and state
-    button.textContent = isExpanded ? 'View All' : 'View Less';
-    isExpanded = !isExpanded; // Flip the state
-}
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script
