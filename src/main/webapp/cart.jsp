@@ -441,6 +441,18 @@
 	<script>
 		function applyOffer() {
 			// Handle offer application logic here
+			var offerSelect = document.getElementById("offer");
+            var selectedOffer = offerSelect.options[offerSelect.selectedIndex];
+            var discount = selectedOffer.getAttribute("data-discount");
+            var totalPrice = <%=grandTotal%>;
+            var discountedPrice = totalPrice;
+
+            if (discount) {
+                discountedPrice = totalPrice - (totalPrice * discount / 100);
+            }
+
+            document.getElementById("discountedPrice").value = discountedPrice.toFixed(2);
+            document.getElementById("selectedOffer").value = selectedOffer.value;
 			console.log("Offer selected.");
 		}
 

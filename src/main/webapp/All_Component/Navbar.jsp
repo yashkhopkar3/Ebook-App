@@ -160,9 +160,9 @@ if (ua != null) {
 				}
 				%>
 
-				<button class="btn btn-outline-dark my-2 my-sm-0 ml-2" type="button">
+				<a href="helpline.jsp" class="btn btn-outline-dark my-2 my-sm-0 ml-2" type="button">
 					<i class="fa-solid fa-phone"></i> Contact Us
-				</button>
+				</a>
 			</form>
 		</div>
 	</div>
