@@ -16,54 +16,40 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: #f0f1f2;
             height: 100vh;
         }
 
-        /* New container class specific to the Contact Us page */
         .contact-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 50px;
+            margin: 50px auto;
+            padding: 40px;
             background-color: #fff;
-            border-radius: 8px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
-        /* Left Side - Image */
+        /* Left Side - Contact Information */
         .left-side {
-            width: 50%;
-            text-align: center;
+            width: 48%;
+            padding-right: 30px; /* Add more space between left and right */
+            border-right: 2px solid #e0e0e0; /* Subtle divider */
         }
 
-        /* Removed shadow from image */
-        .left-side img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            /* Removed shadow */
-        }
-
-        /* Right Side - Contact Information */
-        .right-side {
-            width: 45%;
-            padding-left: 30px;
-        }
-
-        .right-side h2 {
+        .left-side h2 {
             font-size: 36px;
             color: #2c3e50;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
-        .right-side p {
+        .left-side p {
             font-size: 16px;
             color: #555;
-            margin-bottom: 20px;
-            line-height: 1.6;
+            margin-bottom: 25px;
+            line-height: 1.7;
         }
 
         .contact-info {
@@ -75,13 +61,13 @@
         .contact-info li {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .contact-info li i {
-            font-size: 24px;
+            font-size: 28px;
             color: #007bff;
-            margin-right: 15px;
+            margin-right: 20px;
         }
 
         .contact-info li p {
@@ -91,24 +77,84 @@
 
         .social-icons {
             display: flex;
-            justify-content: flex-start;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .social-icons a {
             text-decoration: none;
             color: #555;
-            font-size: 24px;
-            margin-right: 15px;
+            font-size: 28px;
+            margin-right: 20px;
+            transition: color 0.3s ease;
         }
 
         .social-icons a:hover {
             color: #007bff;
         }
 
-        /* Prevent flex layout from affecting the header and footer */
-        header, footer {
-            display: block !important;
+        /* Right Side - Contact Form */
+        .right-side {
+            width: 48%;
+        }
+
+        .right-side h2 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+
+        .contact-form {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        .form-group textarea {
+            height: 130px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
         }
 
         @media (max-width: 768px) {
@@ -123,31 +169,34 @@
             }
 
             .right-side {
-                padding-top: 30px;
+                margin-top: 30px;
+            }
+
+            .left-side {
+                border-right: none;
+                padding-right: 0;
             }
         }
     </style>
 </head>
-<body style="background-color: #f0f1f2;">
+<body>
 
+	<%
+	User u = (User) session.getAttribute("userobj");
+	%>
     <c:if test="${empty userobj}">
         <c:redirect url="login.jsp"></c:redirect>
     </c:if>
 
-    <!-- Include Navbar (keeps the original style) -->
+    <!-- Include Navbar -->
     <%@ include file="All_Component/Navbar.jsp" %>
 
-    <!-- New Contact Us container -->
+    <!-- Contact Us Container -->
     <div class="contact-container">
-        <!-- Left Side with Image -->
+        <!-- Left Side with Contact Info -->
         <div class="left-side">
-            <img src="Book/contactus.jpg" alt="Contact Us Image">
-        </div>
-
-        <!-- Right Side with Contact Info -->
-        <div class="right-side">
-            <h2>Contact Us</h2>
-            <p>Feel free to reach out to us via email or phone. You can also visit us at our office location. We look forward to assisting you!</p>
+            <h2>Contact Information</h2>
+            <p>If you have any questions, feel free to contact us. We are available through the following channels:</p>
             
             <ul class="contact-info">
                 <li><i class="fas fa-phone-alt"></i><p>+91 869899023</p></li>
@@ -163,9 +212,37 @@
                 <a href="#"><i class="fab fa-facebook"></i></a>
             </div>
         </div>
+
+        <!-- Right Side with Contact Form -->
+        <div class="right-side">
+            <h2>Send Us a Message</h2>
+             <!-- Success Message -->
+            <c:if test="${not empty successMsg}">
+                <div class="alert-success">
+                    <p>${successMsg}</p>
+                </div>
+            </c:if>
+            <form class="contact-form" action="SendEmailServlet" method="post">
+                <div class="form-group">
+                    <input type="hidden" id="name" name="name" value="<%=u.getName()%>" required>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" id="email" name="email" value="<%=u.getEmail()%>" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
     </div>
 
-    <!-- Include Footer (keeps the original style) -->
+    <!-- Include Footer -->
     <%@ include file="All_Component/footer.jsp" %>
 
 </body>
