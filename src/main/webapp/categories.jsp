@@ -146,7 +146,7 @@ to {
 	try {
 		// Load JDBC driver and establish connection
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookMart", "root", "yash");
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookMart", "root", "avantika");
 
 		for (String category : categories) {
 			out.println("<div class='container-fluid' id='" + category.toLowerCase() + "-books'>");
