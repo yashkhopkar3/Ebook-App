@@ -8,7 +8,7 @@ public class DBConnect {
 	public static Connection getConn(){
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/BookMart","root","avantika");
+			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/BookMart","root","yash");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
