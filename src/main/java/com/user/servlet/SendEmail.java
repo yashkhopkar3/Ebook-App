@@ -29,7 +29,7 @@ public class SendEmail extends HttpServlet {
 
         // Authentication details for BookMart's Gmail
         final String bookMartEmail = "bookmart768@gmail.com";
-        final String bookMartPassword = "aend cfjl yfrc npwn";  // Replace with actual password
+        final String bookMartPassword = "fdrh xape dmje ipbo";  // Replace with actual password
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {

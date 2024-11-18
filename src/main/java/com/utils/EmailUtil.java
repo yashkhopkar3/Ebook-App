@@ -13,7 +13,7 @@ public class EmailUtil {
 
     // Sender's email ID and password
     private static final String EMAIL = "bookmart768@gmail.com";
-    private static final String PASSWORD = "aend cfjl yfrc npwn"; // Be cautious with hardcoding passwords
+    private static final String PASSWORD = "fdrh xape dmje ipbo"; // Be cautious with hardcoding passwords
 
     /**
      * Sends an email with the specified subject and HTML body to the provided recipient email address.
